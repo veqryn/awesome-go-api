@@ -1,0 +1,70 @@
+package api
+
+import (
+	"context"
+	"fmt"
+	"log/slog"
+	"net/http"
+
+	"github.com/danielgtaylor/huma/v2"
+	"github.com/danielgtaylor/huma/v2/adapters/humachi"
+	"github.com/go-chi/chi/v5"
+)
+
+func Register(router *chi.Mux) huma.API {
+	humaAPI := humachi.New(router, huma.DefaultConfig("My API", "1.0.0"))
+
+	// Quick and Advanced version of registering an endpoint:
+	// huma.Get(api, "/greeting/{name}", Greeting)
+	huma.Register(humaAPI, huma.Operation{
+		Method:      http.MethodGet,
+		Path:        "/greeting/{name}",
+		Tags:        []string{"Greetings"},
+		Summary:     "Say hello to someone",
+		Description: "Respond with a greeting",
+		OperationID: "greeting",
+	}, GetGreeting)
+
+	// huma.Post(api, "/reviews", PostReview)
+	huma.Register(humaAPI, huma.Operation{
+		Method:        http.MethodPost,
+		DefaultStatus: http.StatusCreated,
+		Path:          "/reviews",
+		Summary:       "Post a review",
+		Tags:          []string{"Reviews"},
+		OperationID:   "post-review",
+	}, PostReview)
+
+	return humaAPI
+}
+
+type GetGreetingInput struct {
+	Name string `path:"name" maxLength:"30" example:"world" doc:"Name to greet"`
+}
+
+// GetGreetingOutput represents the greeting operation response.
+type GetGreetingOutput struct {
+	Body struct {
+		Message string `json:"message" example:"Hello, world!" doc:"Greeting message"`
+	}
+}
+
+func GetGreeting(ctx context.Context, input *GetGreetingInput) (*GetGreetingOutput, error) {
+	resp := &GetGreetingOutput{}
+	resp.Body.Message = fmt.Sprintf("Hello, %s!", input.Name)
+	return resp, nil
+}
+
+// PostReviewInput represents the review operation request.
+type PostReviewInput struct {
+	Body struct {
+		Author  string `json:"author" maxLength:"10" doc:"Author of the review"`
+		Rating  int    `json:"rating" minimum:"1" maximum:"5" doc:"Rating from 1 to 5"`
+		Message string `json:"message,omitempty" maxLength:"100" doc:"Review message"`
+	}
+}
+
+func PostReview(ctx context.Context, i *PostReviewInput) (*struct{}, error) {
+	slog.Info("review", "body", i.Body)
+	return nil, nil
+}
