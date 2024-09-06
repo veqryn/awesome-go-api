@@ -3,10 +3,12 @@
 .travis.yml
 README.md
 api/openapi.yaml
+api_default.go
 api_greetings.go
 api_reviews.go
 client.go
 configuration.go
+docs/DefaultAPI.md
 docs/ErrorDetail.md
 docs/ErrorModel.md
 docs/GetGreetingOutputBody.md
@@ -14,13 +16,12 @@ docs/GreetingsAPI.md
 docs/PostReviewInputBody.md
 docs/ReviewsAPI.md
 git_push.sh
-go.mod
-go.sum
 model_error_detail.go
 model_error_model.go
 model_get_greeting_output_body.go
 model_post_review_input_body.go
 response.go
+test/api_default_test.go
 test/api_greetings_test.go
 test/api_reviews_test.go
 utils.go

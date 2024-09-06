@@ -87,6 +87,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *GreetingsApi* | [**greeting**](docs/GreetingsApi.md#greeting) | **GET** /greeting/{name} | Say hello to someone
 *ReviewsApi* | [**post_review**](docs/ReviewsApi.md#post_review) | **POST** /reviews | Post a review
+*DefaultApi* | [**get_error**](docs/DefaultApi.md#get_error) | **GET** /error | Get error
 
 
 ## Documentation For Models

@@ -78,6 +78,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultAPI* | [**GetError**](docs/DefaultAPI.md#geterror) | **Get** /error | Get error
 *GreetingsAPI* | [**Greeting**](docs/GreetingsAPI.md#greeting) | **Get** /greeting/{name} | Say hello to someone
 *ReviewsAPI* | [**PostReview**](docs/ReviewsAPI.md#postreview) | **Post** /reviews | Post a review
 

@@ -4,6 +4,7 @@
 .openapi-generator-ignore
 .travis.yml
 README.md
+docs/DefaultApi.md
 docs/ErrorDetail.md
 docs/ErrorModel.md
 docs/GetGreetingOutputBody.md
@@ -13,6 +14,7 @@ docs/ReviewsApi.md
 git_push.sh
 openapi_client/__init__.py
 openapi_client/api/__init__.py
+openapi_client/api/default_api.py
 openapi_client/api/greetings_api.py
 openapi_client/api/reviews_api.py
 openapi_client/api_client.py
@@ -32,6 +34,7 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
+test/test_default_api.py
 test/test_error_detail.py
 test/test_error_model.py
 test/test_get_greeting_output_body.py

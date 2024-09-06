@@ -5,6 +5,19 @@ info:
 servers:
 - url: /
 paths:
+  /error:
+    get:
+      operationId: get-error
+      responses:
+        "204":
+          description: No Content
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      summary: Get error
   /greeting/{name}:
     get:
       description: Respond with a greeting

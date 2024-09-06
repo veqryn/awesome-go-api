@@ -20,13 +20,16 @@ import (
 func main() {
 	log.Printf("Server started")
 
+	DefaultAPIService := openapi.NewDefaultAPIService()
+	DefaultAPIController := openapi.NewDefaultAPIController(DefaultAPIService)
+
 	GreetingsAPIService := openapi.NewGreetingsAPIService()
 	GreetingsAPIController := openapi.NewGreetingsAPIController(GreetingsAPIService)
 
 	ReviewsAPIService := openapi.NewReviewsAPIService()
 	ReviewsAPIController := openapi.NewReviewsAPIController(ReviewsAPIService)
 
-	router := openapi.NewRouter(GreetingsAPIController, ReviewsAPIController)
+	router := openapi.NewRouter(DefaultAPIController, GreetingsAPIController, ReviewsAPIController)
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

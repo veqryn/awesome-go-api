@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/davecgh/go-spew/spew"
 	client "github.com/veqryn/awesome-go-api/huma/openapi/oapi_codegen/client/gen"
 )

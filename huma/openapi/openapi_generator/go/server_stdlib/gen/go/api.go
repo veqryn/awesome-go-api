@@ -17,6 +17,12 @@ import (
 
 
 
+// DefaultAPIRouter defines the required methods for binding the api requests to a responses for the DefaultAPI
+// The DefaultAPIRouter implementation should parse necessary information from the http request,
+// pass the data to a DefaultAPIServicer to perform the required actions, then write the service results to the http response.
+type DefaultAPIRouter interface { 
+	GetError(http.ResponseWriter, *http.Request)
+}
 // GreetingsAPIRouter defines the required methods for binding the api requests to a responses for the GreetingsAPI
 // The GreetingsAPIRouter implementation should parse necessary information from the http request,
 // pass the data to a GreetingsAPIServicer to perform the required actions, then write the service results to the http response.
@@ -28,6 +34,15 @@ type GreetingsAPIRouter interface {
 // pass the data to a ReviewsAPIServicer to perform the required actions, then write the service results to the http response.
 type ReviewsAPIRouter interface { 
 	PostReview(http.ResponseWriter, *http.Request)
+}
+
+
+// DefaultAPIServicer defines the api actions for the DefaultAPI service
+// This interface intended to stay up to date with the openapi yaml used to generate it,
+// while the service implementation can be ignored with the .openapi-generator-ignore file
+// and updated with the logic required for the API.
+type DefaultAPIServicer interface { 
+	GetError(context.Context) (ImplResponse, error)
 }
 
 
