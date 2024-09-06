@@ -76,6 +76,9 @@ type PostReviewJSONRequestBody = PostReviewInputBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Get error
+	// (GET /error)
+	GetError(w http.ResponseWriter, r *http.Request)
 	// Say hello to someone
 	// (GET /greeting/{name})
 	Greeting(w http.ResponseWriter, r *http.Request, name string)
@@ -87,6 +90,12 @@ type ServerInterface interface {
 // Unimplemented server implementation that returns http.StatusNotImplemented for each endpoint.
 
 type Unimplemented struct{}
+
+// Get error
+// (GET /error)
+func (_ Unimplemented) GetError(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
 
 // Say hello to someone
 // (GET /greeting/{name})
@@ -108,6 +117,21 @@ type ServerInterfaceWrapper struct {
 }
 
 type MiddlewareFunc func(http.Handler) http.Handler
+
+// GetError operation middleware
+func (siw *ServerInterfaceWrapper) GetError(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetError(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
 
 // Greeting operation middleware
 func (siw *ServerInterfaceWrapper) Greeting(w http.ResponseWriter, r *http.Request) {
@@ -263,6 +287,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/error", wrapper.GetError)
+	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/greeting/{name}", wrapper.Greeting)
 	})

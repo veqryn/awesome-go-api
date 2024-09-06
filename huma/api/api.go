@@ -15,7 +15,7 @@ func Register(router *chi.Mux) huma.API {
 	humaAPI := humachi.New(router, huma.DefaultConfig("My API", "1.0.0"))
 
 	// Quick and Advanced version of registering an endpoint:
-	// huma.Get(api, "/greeting/{name}", Greeting)
+	// huma.Get(humaAPI, "/greeting/{name}", Greeting)
 	huma.Register(humaAPI, huma.Operation{
 		Method:      http.MethodGet,
 		Path:        "/greeting/{name}",
@@ -25,7 +25,17 @@ func Register(router *chi.Mux) huma.API {
 		OperationID: "greeting",
 	}, GetGreeting)
 
-	// huma.Post(api, "/reviews", PostReview)
+	// huma.Post(humaAPI, "/reviews", PostReview)
+	huma.Register(humaAPI, huma.Operation{
+		Method:        http.MethodPost,
+		DefaultStatus: http.StatusCreated,
+		Path:          "/reviews",
+		Summary:       "Post a review",
+		Tags:          []string{"Reviews"},
+		OperationID:   "post-review",
+	}, PostReview)
+
+	huma.Get(humaAPI, "/error", GetError)
 	huma.Register(humaAPI, huma.Operation{
 		Method:        http.MethodPost,
 		DefaultStatus: http.StatusCreated,
@@ -64,7 +74,16 @@ type PostReviewInput struct {
 	}
 }
 
-func PostReview(ctx context.Context, i *PostReviewInput) (*struct{}, error) {
-	slog.Info("review", "body", i.Body)
+func PostReview(ctx context.Context, input *PostReviewInput) (*struct{}, error) {
+	slog.Info("review", "body", input.Body)
 	return nil, nil
+}
+
+func GetError(ctx context.Context, input *struct{}) (*struct{}, error) {
+	err := &huma.ErrorDetail{
+		Message:  "root cause error",
+		Location: "on the error page",
+		Value:    224.92,
+	}
+	return nil, huma.Error400BadRequest("This is an example error", err)
 }

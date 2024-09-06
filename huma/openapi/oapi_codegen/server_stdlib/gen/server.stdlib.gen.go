@@ -77,6 +77,9 @@ type PostReviewJSONRequestBody = PostReviewInputBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Get error
+	// (GET /error)
+	GetError(w http.ResponseWriter, r *http.Request)
 	// Say hello to someone
 	// (GET /greeting/{name})
 	Greeting(w http.ResponseWriter, r *http.Request, name string)
@@ -93,6 +96,21 @@ type ServerInterfaceWrapper struct {
 }
 
 type MiddlewareFunc func(http.Handler) http.Handler
+
+// GetError operation middleware
+func (siw *ServerInterfaceWrapper) GetError(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetError(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
 
 // Greeting operation middleware
 func (siw *ServerInterfaceWrapper) Greeting(w http.ResponseWriter, r *http.Request) {
@@ -249,6 +267,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
+	m.HandleFunc("GET "+options.BaseURL+"/error", wrapper.GetError)
 	m.HandleFunc("GET "+options.BaseURL+"/greeting/{name}", wrapper.Greeting)
 	m.HandleFunc("POST "+options.BaseURL+"/reviews", wrapper.PostReview)
 

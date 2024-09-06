@@ -100,6 +100,19 @@ info:
   version: 1.0.0
 openapi: 3.0.3
 paths:
+  /error:
+    get:
+      operationId: get-error
+      responses:
+        "204":
+          description: No Content
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorModel"
+          description: Error
+      summary: Get error
   /greeting/{name}:
     get:
       description: Respond with a greeting

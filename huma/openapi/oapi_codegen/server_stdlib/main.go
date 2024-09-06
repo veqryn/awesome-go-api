@@ -45,8 +45,34 @@ func (s *App) PostReview(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+func (s *App) GetError(w http.ResponseWriter, r *http.Request) {
+	respErr := server.ErrorModel{
+		Detail: Ptr("This is an example error"),
+		Errors: &[]server.ErrorDetail{
+			{
+				Location: Ptr("on the error page"),
+				Message:  Ptr("root cause error"),
+				Value:    Ptr[any](224.92),
+			},
+		},
+		Status: Ptr[int64](http.StatusBadRequest),
+		Title:  Ptr("Bad Request"),
+	}
+	b, err := json.Marshal(respErr)
+	if err != nil {
+		panic(err)
+	}
+
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write(b)
+}
+
 func main() {
 	app := &App{}
 	handler := server.HandlerWithOptions(app, server.StdHTTPServerOptions{})
 	http.ListenAndServe(":8080", handler)
+}
+
+func Ptr[T any](t T) *T {
+	return &t
 }

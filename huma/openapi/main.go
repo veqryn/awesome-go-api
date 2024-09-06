@@ -28,7 +28,7 @@ import (
 // https://openapi-generator.tech/docs/usage
 // brew install openapi-generator
 //go:generate rm -rf ./openapi_generator/go/client/gen ./openapi_generator/go/server_stdlib/gen ./openapi_generator/python/client/gen
-//go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go -o ./openapi_generator/go/client/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/client/gen
+//go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go -o ./openapi_generator/go/client/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/client/gen --additional-properties=outputAsLibrary=true,sourceFolder=openapi,withGoMod=false
 //go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go-server -o ./openapi_generator/go/server_stdlib/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/server_stdlib/gen
 //go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g python -o ./openapi_generator/python/client/gen
 

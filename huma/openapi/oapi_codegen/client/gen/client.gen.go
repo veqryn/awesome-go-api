@@ -152,6 +152,9 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
+	// GetError request
+	GetError(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// Greeting request
 	Greeting(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -159,6 +162,18 @@ type ClientInterface interface {
 	PostReviewWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	PostReview(ctx context.Context, body PostReviewJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+func (c *Client) GetError(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetErrorRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
 }
 
 func (c *Client) Greeting(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -195,6 +210,33 @@ func (c *Client) PostReview(ctx context.Context, body PostReviewJSONRequestBody,
 		return nil, err
 	}
 	return c.Client.Do(req)
+}
+
+// NewGetErrorRequest generates requests for GetError
+func NewGetErrorRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/error")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
 }
 
 // NewGreetingRequest generates requests for Greeting
@@ -314,6 +356,9 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
+	// GetErrorWithResponse request
+	GetErrorWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetErrorResponse, error)
+
 	// GreetingWithResponse request
 	GreetingWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*GreetingResponse, error)
 
@@ -321,6 +366,28 @@ type ClientWithResponsesInterface interface {
 	PostReviewWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostReviewResponse, error)
 
 	PostReviewWithResponse(ctx context.Context, body PostReviewJSONRequestBody, reqEditors ...RequestEditorFn) (*PostReviewResponse, error)
+}
+
+type GetErrorResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *ErrorModel
+}
+
+// Status returns HTTPResponse.Status
+func (r GetErrorResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetErrorResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
 }
 
 type GreetingResponse struct {
@@ -368,6 +435,15 @@ func (r PostReviewResponse) StatusCode() int {
 	return 0
 }
 
+// GetErrorWithResponse request returning *GetErrorResponse
+func (c *ClientWithResponses) GetErrorWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetErrorResponse, error) {
+	rsp, err := c.GetError(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetErrorResponse(rsp)
+}
+
 // GreetingWithResponse request returning *GreetingResponse
 func (c *ClientWithResponses) GreetingWithResponse(ctx context.Context, name string, reqEditors ...RequestEditorFn) (*GreetingResponse, error) {
 	rsp, err := c.Greeting(ctx, name, reqEditors...)
@@ -392,6 +468,32 @@ func (c *ClientWithResponses) PostReviewWithResponse(ctx context.Context, body P
 		return nil, err
 	}
 	return ParsePostReviewResponse(rsp)
+}
+
+// ParseGetErrorResponse parses an HTTP response from a GetErrorWithResponse call
+func ParseGetErrorResponse(rsp *http.Response) (*GetErrorResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetErrorResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorModel
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
 }
 
 // ParseGreetingResponse parses an HTTP response from a GreetingWithResponse call
