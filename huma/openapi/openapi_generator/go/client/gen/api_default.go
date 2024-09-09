@@ -19,12 +19,26 @@ import (
 )
 
 
+type DefaultAPI interface {
+
+	/*
+	GetError Get error
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetErrorRequest
+	*/
+	GetError(ctx context.Context) ApiGetErrorRequest
+
+	// GetErrorExecute executes the request
+	GetErrorExecute(r ApiGetErrorRequest) (*http.Response, error)
+}
+
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
 type ApiGetErrorRequest struct {
 	ctx context.Context
-	ApiService *DefaultAPIService
+	ApiService DefaultAPI
 }
 
 func (r ApiGetErrorRequest) Execute() (*http.Response, error) {

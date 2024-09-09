@@ -20,12 +20,30 @@ import (
 )
 
 
+type GreetingsAPI interface {
+
+	/*
+	Greeting Say hello to someone
+
+	Respond with a greeting
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param name Name to greet
+	@return ApiGreetingRequest
+	*/
+	Greeting(ctx context.Context, name string) ApiGreetingRequest
+
+	// GreetingExecute executes the request
+	//  @return GetGreetingOutputBody
+	GreetingExecute(r ApiGreetingRequest) (*GetGreetingOutputBody, *http.Response, error)
+}
+
 // GreetingsAPIService GreetingsAPI service
 type GreetingsAPIService service
 
 type ApiGreetingRequest struct {
 	ctx context.Context
-	ApiService *GreetingsAPIService
+	ApiService GreetingsAPI
 	name string
 }
 

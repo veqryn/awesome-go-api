@@ -6,6 +6,7 @@ require (
 	github.com/danielgtaylor/huma/v2 v2.22.1
 	github.com/davecgh/go-spew v1.1.1
 	github.com/go-chi/chi/v5 v5.1.0
+	github.com/gorilla/mux v1.8.1
 	github.com/oapi-codegen/oapi-codegen/v2 v2.3.0
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/stretchr/testify v1.9.0

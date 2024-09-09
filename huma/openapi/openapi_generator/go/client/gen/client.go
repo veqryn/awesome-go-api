@@ -49,11 +49,11 @@ type APIClient struct {
 
 	// API Services
 
-	DefaultAPI *DefaultAPIService
+	DefaultAPI DefaultAPI
 
-	GreetingsAPI *GreetingsAPIService
+	GreetingsAPI GreetingsAPI
 
-	ReviewsAPI *ReviewsAPIService
+	ReviewsAPI ReviewsAPI
 }
 
 type service struct {

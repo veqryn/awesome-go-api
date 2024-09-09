@@ -86,11 +86,11 @@ func main() {
 			if errorDetails, ok := parsedError.Model().(openapi.ErrorModel); ok {
 				spew.Dump(errorDetails)
 			}
+		} else {
+			spew.Dump(resp)
+			spew.Dump(err)
+			panic(err)
 		}
-
-		spew.Dump(resp)
-		spew.Dump(err)
-		panic(err)
 	}
 
 	fmt.Printf("Status: %s\n", resp.Status)

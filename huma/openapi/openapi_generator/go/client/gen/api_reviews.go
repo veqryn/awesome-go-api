@@ -19,12 +19,26 @@ import (
 )
 
 
+type ReviewsAPI interface {
+
+	/*
+	PostReview Post a review
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiPostReviewRequest
+	*/
+	PostReview(ctx context.Context) ApiPostReviewRequest
+
+	// PostReviewExecute executes the request
+	PostReviewExecute(r ApiPostReviewRequest) (*http.Response, error)
+}
+
 // ReviewsAPIService ReviewsAPI service
 type ReviewsAPIService service
 
 type ApiPostReviewRequest struct {
 	ctx context.Context
-	ApiService *ReviewsAPIService
+	ApiService ReviewsAPI
 	postReviewInputBody *PostReviewInputBody
 }
 
