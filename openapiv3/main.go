@@ -23,3 +23,9 @@ package openapiv3
 //go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go -o ./openapi_generator/go/client/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/client/gen --additional-properties=withGoMod=false,generateInterfaces=true
 //go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go-server -o ./openapi_generator/go/server_gorilla/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/server_gorilla/gen --additional-properties=outputAsLibrary=true,sourceFolder=openapi
 //go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g python -o ./openapi_generator/python/client/gen
+
+// Generate clients/servers with contiamo/openapi-generator-go
+// https://github.com/contiamo/openapi-generator-go
+// go install github.com/contiamo/openapi-generator-go/v2@v2.1.2
+//go:generate rm -rf ./openapi_generator_go/server_chi/gen
+//go:generate openapi-generator-go generate --spec openapi_v3.0.3.yaml --output ./openapi_generator_go/server_chi/gen
