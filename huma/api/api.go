@@ -12,7 +12,7 @@ import (
 )
 
 func Register(router *chi.Mux) huma.API {
-	humaAPI := humachi.New(router, huma.DefaultConfig("My API", "1.0.0"))
+	humaAPI := humachi.New(router, huma.DefaultConfig("Awesome GO API", "1.0.0"))
 
 	// Quick and Advanced version of registering an endpoint:
 	// huma.Get(humaAPI, "/greeting/{name}", Greeting)

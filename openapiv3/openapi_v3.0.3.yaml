@@ -1,0 +1,124 @@
+openapi: 3.0.3
+
+info:
+  title: Awesome GO API
+  version: 1.0.0
+  description: Actual example use cases for a curated list of golang api generator libraries
+
+servers:
+  - url: http://localhost:8080
+    description: dev instance
+
+paths:
+  /error:
+    get:
+      summary: Get an error
+      description: Responds with an error
+      operationId: get-error
+      # x-handler-group is required only by "openapi-generator-go"
+      x-handler-group: DefaultHandler
+      responses:
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /greeting/{name}:
+    get:
+      summary: Say hello to someone
+      description: Responds with a greeting
+      operationId: greeting
+      x-handler-group: DefaultHandler
+      parameters:
+        - name: name
+          description: Name to greet
+          required: true
+          in: path
+          example: world
+          schema:
+            maxLength: 30
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetGreetingOutputBody"
+          description: OK
+        # Use default as a catch-all implied error
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /reviews:
+    post:
+      summary: Send a review
+      description: Post a review to be saved
+      operationId: post-review
+      x-handler-group: DefaultHandler
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostReviewInputBody"
+      responses:
+        201:
+          description: Created
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Error:
+      description: An API error
+      type: object
+      properties:
+        title:
+          description: A short, human-readable summary of the problem type. This value should not change between occurrences of the error.
+          example: Bad Request
+          type: string
+        details:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Property foo is required but is missing.
+          type: string
+        properties:
+          description: Optional map of properties
+          nullable: true
+          type: object
+    GetGreetingOutputBody:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          description: Greeting message
+          example: Hello, world!
+          type: string
+    PostReviewInputBody:
+      type: object
+      required:
+        - author
+        - rating
+      properties:
+        author:
+          description: Author of the review
+          maxLength: 10
+          type: string
+        message:
+          description: Review message
+          maxLength: 100
+          type: string
+        rating:
+          description: Rating from 1 to 5
+          format: int64
+          minimum: 1
+          maximum: 5
+          type: integer

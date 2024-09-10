@@ -1,5 +1,5 @@
 /*
-My API
+Awesome GO API
 
 Testing DefaultAPIService
 
