@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/davecgh/go-spew/spew"
-	client "github.com/veqryn/awesome-go-api/huma/openapi/oapi_codegen/client/gen"
+	client "github.com/veqryn/awesome-go-api/openapiv3/oapi_codegen/client/gen"
 )
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 	fmt.Printf("Status: %s\n", greeting.Status())
 	fmt.Printf("Code: %d\n", greeting.StatusCode())
 	spew.Dump(greeting.JSON200)
-	spew.Dump(greeting.ApplicationproblemJSONDefault)
+	spew.Dump(greeting.JSONDefault)
 
 	// Send a review. Body became an argument.
 	fmt.Println("--- Sending a Review:")
@@ -55,5 +55,5 @@ func main() {
 
 	fmt.Printf("Status: %s\n", errorResp.Status())
 	fmt.Printf("Code: %d\n", errorResp.StatusCode())
-	spew.Dump(errorResp.ApplicationproblemJSONDefault)
+	spew.Dump(errorResp.JSON400)
 }

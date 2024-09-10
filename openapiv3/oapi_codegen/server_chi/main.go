@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	server "github.com/veqryn/awesome-go-api/huma/openapi/oapi_codegen/server_stdlib/gen"
+	server "github.com/veqryn/awesome-go-api/openapiv3/oapi_codegen/server_chi/gen"
 )
 
 var _ server.ServerInterface = &App{}
@@ -46,17 +46,12 @@ func (s *App) PostReview(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *App) GetError(w http.ResponseWriter, r *http.Request) {
-	respErr := server.ErrorModel{
-		Detail: Ptr("This is an example error"),
-		Errors: &[]server.ErrorDetail{
-			{
-				Location: Ptr("on the error page"),
-				Message:  Ptr("root cause error"),
-				Value:    Ptr[any](224.92),
-			},
+	respErr := server.Error{
+		Details: Ptr("This is an example error"),
+		Properties: &map[string]any{
+			"cause": 224.92,
 		},
-		Status: Ptr[int64](http.StatusBadRequest),
-		Title:  Ptr("Bad Request"),
+		Title: Ptr("Bad Request"),
 	}
 	b, err := json.Marshal(respErr)
 	if err != nil {
@@ -73,7 +68,7 @@ func (s *App) GetError(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	app := &App{}
-	handler := server.HandlerWithOptions(app, server.StdHTTPServerOptions{})
+	handler := server.HandlerWithOptions(app, server.ChiServerOptions{})
 	http.ListenAndServe(":8080", handler)
 }
 

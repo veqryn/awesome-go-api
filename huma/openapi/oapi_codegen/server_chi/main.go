@@ -63,8 +63,12 @@ func (s *App) GetError(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusBadRequest)
-	w.Write(b)
+	_, err = w.Write(b)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
