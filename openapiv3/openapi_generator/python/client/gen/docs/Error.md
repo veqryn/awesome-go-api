@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **str** | A short, human-readable summary of the problem type. This value should not change between occurrences of the error. | [optional] 
 **details** | **str** | A human-readable explanation specific to this occurrence of the problem. | [optional] 
-**properties** | **object** | Optional map of properties | [optional] 
+**properties** | **Dict[str, object]** | Optional map of properties | [optional] 
 
 ## Example
 

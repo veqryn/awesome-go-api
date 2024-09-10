@@ -110,29 +110,43 @@ func (s *Error) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *ErrorProperties) Encode(e *jx.Encoder) {
+func (s ErrorProperties) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
-// encodeFields encodes fields.
-func (s *ErrorProperties) encodeFields(e *jx.Encoder) {
-}
+// encodeFields implements json.Marshaler.
+func (s ErrorProperties) encodeFields(e *jx.Encoder) {
+	for k, elem := range s {
+		e.FieldStart(k)
 
-var jsonFieldsNameOfErrorProperties = [0]string{}
+		if len(elem) != 0 {
+			e.Raw(elem)
+		}
+	}
+}
 
 // Decode decodes ErrorProperties from json.
 func (s *ErrorProperties) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode ErrorProperties to nil")
 	}
-
+	m := s.init()
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		default:
-			return d.Skip()
+		var elem jx.Raw
+		if err := func() error {
+			v, err := d.RawAppend(nil)
+			elem = jx.Raw(v)
+			if err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			return errors.Wrapf(err, "decode field %q", k)
 		}
+		m[string(k)] = elem
+		return nil
 	}); err != nil {
 		return errors.Wrap(err, "decode ErrorProperties")
 	}
@@ -141,7 +155,7 @@ func (s *ErrorProperties) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *ErrorProperties) MarshalJSON() ([]byte, error) {
+func (s ErrorProperties) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
@@ -249,20 +263,37 @@ func (s *GetGreetingOutputBody) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes *ErrorProperties as json.
-func (o OptErrorProperties) Encode(e *jx.Encoder) {
+// Encode encodes ErrorProperties as json.
+func (o OptNilErrorProperties) Encode(e *jx.Encoder) {
 	if !o.Set {
+		return
+	}
+	if o.Null {
+		e.Null()
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes *ErrorProperties from json.
-func (o *OptErrorProperties) Decode(d *jx.Decoder) error {
+// Decode decodes ErrorProperties from json.
+func (o *OptNilErrorProperties) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptErrorProperties to nil")
+		return errors.New("invalid: unable to decode OptNilErrorProperties to nil")
+	}
+	if d.Next() == jx.Null {
+		if err := d.Null(); err != nil {
+			return err
+		}
+
+		var v ErrorProperties
+		o.Value = v
+		o.Set = true
+		o.Null = true
+		return nil
 	}
 	o.Set = true
+	o.Null = false
+	o.Value = make(ErrorProperties)
 	if err := o.Value.Decode(d); err != nil {
 		return err
 	}
@@ -270,14 +301,14 @@ func (o *OptErrorProperties) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptErrorProperties) MarshalJSON() ([]byte, error) {
+func (s OptNilErrorProperties) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptErrorProperties) UnmarshalJSON(data []byte) error {
+func (s *OptNilErrorProperties) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

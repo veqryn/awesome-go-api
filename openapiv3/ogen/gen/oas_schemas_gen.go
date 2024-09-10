@@ -2,6 +2,10 @@
 
 package api
 
+import (
+	"github.com/go-faster/jx"
+)
+
 // An API error.
 // Ref: #/components/schemas/Error
 type Error struct {
@@ -11,7 +15,7 @@ type Error struct {
 	// A human-readable explanation specific to this occurrence of the problem.
 	Details OptString `json:"details"`
 	// Optional map of properties.
-	Properties OptErrorProperties `json:"properties"`
+	Properties OptNilErrorProperties `json:"properties"`
 }
 
 // GetTitle returns the value of Title.
@@ -25,7 +29,7 @@ func (s *Error) GetDetails() OptString {
 }
 
 // GetProperties returns the value of Properties.
-func (s *Error) GetProperties() OptErrorProperties {
+func (s *Error) GetProperties() OptNilErrorProperties {
 	return s.Properties
 }
 
@@ -40,12 +44,21 @@ func (s *Error) SetDetails(val OptString) {
 }
 
 // SetProperties sets the value of Properties.
-func (s *Error) SetProperties(val OptErrorProperties) {
+func (s *Error) SetProperties(val OptNilErrorProperties) {
 	s.Properties = val
 }
 
 // Optional map of properties.
-type ErrorProperties struct{}
+type ErrorProperties map[string]jx.Raw
+
+func (s *ErrorProperties) init() ErrorProperties {
+	m := *s
+	if m == nil {
+		m = map[string]jx.Raw{}
+		*s = m
+	}
+	return m
+}
 
 // ErrorStatusCode wraps Error with StatusCode.
 type ErrorStatusCode struct {
@@ -94,38 +107,55 @@ func (s *GetGreetingOutputBody) SetMessage(val string) {
 
 func (*GetGreetingOutputBody) greetingRes() {}
 
-// NewOptErrorProperties returns new OptErrorProperties with value set to v.
-func NewOptErrorProperties(v *ErrorProperties) OptErrorProperties {
-	return OptErrorProperties{
+// NewOptNilErrorProperties returns new OptNilErrorProperties with value set to v.
+func NewOptNilErrorProperties(v ErrorProperties) OptNilErrorProperties {
+	return OptNilErrorProperties{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptErrorProperties is optional *ErrorProperties.
-type OptErrorProperties struct {
-	Value *ErrorProperties
+// OptNilErrorProperties is optional nullable ErrorProperties.
+type OptNilErrorProperties struct {
+	Value ErrorProperties
 	Set   bool
+	Null  bool
 }
 
-// IsSet returns true if OptErrorProperties was set.
-func (o OptErrorProperties) IsSet() bool { return o.Set }
+// IsSet returns true if OptNilErrorProperties was set.
+func (o OptNilErrorProperties) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptErrorProperties) Reset() {
-	var v *ErrorProperties
+func (o *OptNilErrorProperties) Reset() {
+	var v ErrorProperties
 	o.Value = v
 	o.Set = false
+	o.Null = false
 }
 
 // SetTo sets value to v.
-func (o *OptErrorProperties) SetTo(v *ErrorProperties) {
+func (o *OptNilErrorProperties) SetTo(v ErrorProperties) {
 	o.Set = true
+	o.Null = false
+	o.Value = v
+}
+
+// IsSet returns true if value is Null.
+func (o OptNilErrorProperties) IsNull() bool { return o.Null }
+
+// SetNull sets value to null.
+func (o *OptNilErrorProperties) SetToNull() {
+	o.Set = true
+	o.Null = true
+	var v ErrorProperties
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptErrorProperties) Get() (v *ErrorProperties, ok bool) {
+func (o OptNilErrorProperties) Get() (v ErrorProperties, ok bool) {
+	if o.Null {
+		return v, false
+	}
 	if !o.Set {
 		return v, false
 	}
@@ -133,7 +163,7 @@ func (o OptErrorProperties) Get() (v *ErrorProperties, ok bool) {
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptErrorProperties) Or(d *ErrorProperties) *ErrorProperties {
+func (o OptNilErrorProperties) Or(d ErrorProperties) ErrorProperties {
 	if v, ok := o.Get(); ok {
 		return v
 	}

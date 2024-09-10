@@ -37,7 +37,7 @@ class TestError(unittest.TestCase):
             return Error(
                 title = 'Bad Request',
                 details = 'Property foo is required but is missing.',
-                properties = None
+                properties = { }
             )
         else:
             return Error(

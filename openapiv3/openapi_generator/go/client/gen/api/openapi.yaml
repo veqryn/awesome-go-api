@@ -79,7 +79,8 @@ components:
       example:
         details: Property foo is required but is missing.
         title: Bad Request
-        properties: "{}"
+        properties:
+          key: ""
       properties:
         title:
           description: "A short, human-readable summary of the problem type. This\
@@ -92,6 +93,7 @@ components:
           example: Property foo is required but is missing.
           type: string
         properties:
+          additionalProperties: true
           description: Optional map of properties
           nullable: true
           type: object

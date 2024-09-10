@@ -93,6 +93,7 @@ components:
           description: Optional map of properties
           nullable: true
           type: object
+          additionalProperties: true
     GetGreetingOutputBody:
       type: object
       required:

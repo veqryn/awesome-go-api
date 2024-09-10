@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
+	"github.com/go-faster/jx"
 	api "github.com/veqryn/awesome-go-api/openapiv3/ogen/gen"
 )
 
@@ -30,9 +32,10 @@ func (s *App) GetError(ctx context.Context) (*api.Error, error) {
 	respErr := &api.Error{
 		Title:   api.NewOptString("Bad Request"),
 		Details: api.NewOptString("This is an example error"),
-		// Looks like this didn't get generated as a map, and therefore we can't set arbitrary fields on it.
-		// Also, the generated client can't handle empty structs, and instead wants them to be optional->nil.
-		Properties: api.OptErrorProperties{},
+		// Unfortunately Ogen generates free-form objects as a map of string->[]byte, which is annoying
+		Properties: api.NewOptNilErrorProperties(api.ErrorProperties{
+			"cause": MustMarshal(224.92),
+		}),
 	}
 	return respErr, nil
 }
@@ -45,4 +48,12 @@ func main() {
 	}
 
 	http.ListenAndServe(":8080", server)
+}
+
+func MustMarshal(v any) jx.Raw {
+	b, err := json.Marshal(v)
+	if err != nil {
+		panic(err)
+	}
+	return b
 }
