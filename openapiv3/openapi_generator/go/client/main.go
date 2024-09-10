@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/davecgh/go-spew/spew"
-	openapi "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/client/gen"
+	openapi "github.com/veqryn/awesome-go-api/openapiv3/openapi_generator/go/client/gen"
 )
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	// read the full body, closed it, and replaced the response body with a
 	// NoOpCloser of the Buffer.
 	fmt.Println("--- Getting a Greeting:")
-	greetingReq := c.GreetingsAPI.Greeting(ctx, "Bob")
+	greetingReq := c.DefaultAPI.Greeting(ctx, "Bob")
 	greetingOutput, resp, err := greetingReq.Execute()
 	if err != nil {
 		panic(err)
@@ -45,7 +45,7 @@ func main() {
 	review.Message = &message
 
 	// Create a request, then set the body, before sending
-	reviewReq := c.ReviewsAPI.PostReview(ctx)
+	reviewReq := c.DefaultAPI.PostReview(ctx)
 	reviewReq = reviewReq.PostReviewInputBody(*review) // This returns a copy with the body
 	resp, err = reviewReq.Execute()
 	if err != nil {
@@ -66,7 +66,7 @@ func main() {
 		// One way is to just always try to parse the response body
 		if resp != nil {
 			// Unfortunately you need to parse this yourself
-			var errorDetails openapi.ErrorModel
+			var errorDetails openapi.Error
 			jsonErr := json.NewDecoder(resp.Body).Decode(&errorDetails)
 			if jsonErr != nil {
 				panic(jsonErr)
@@ -83,7 +83,7 @@ func main() {
 			spew.Dump(parsedError.Model())
 			spew.Dump(string(parsedError.Body()))
 
-			if errorDetails, ok := parsedError.Model().(openapi.ErrorModel); ok {
+			if errorDetails, ok := parsedError.Model().(openapi.Error); ok {
 				spew.Dump(errorDetails)
 			}
 		} else {
