@@ -32,6 +32,6 @@ package openapiv3
 
 // Generate clients/servers with ogen
 // https://github.com/ogen-go/ogen
-// go install -v github.com/ogen-go/ogen/cmd/ogen@latest
+// go install -v github.com/ogen-go/ogen/cmd/ogen@v1.4.1
 //go:generate rm -rf ./ogen/gen
 //go:generate go run github.com/ogen-go/ogen/cmd/ogen --target ./ogen/gen --clean openapi_v3.0.3.yaml

@@ -6,7 +6,7 @@ An API error
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**title** | **str** | A short, human-readable summary of the problem type. This value should not change between occurrences of the error. | [optional] 
+**title** | **str** | A short, human-readable summary of the problem type. This value should not change between occurrences of the error. | 
 **details** | **str** | A human-readable explanation specific to this occurrence of the problem. | [optional] 
 **properties** | **Dict[str, object]** | Optional map of properties | [optional] 
 

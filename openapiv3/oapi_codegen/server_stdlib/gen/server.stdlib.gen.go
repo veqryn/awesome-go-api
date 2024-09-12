@@ -21,7 +21,7 @@ type Error struct {
 	Properties *map[string]interface{} `json:"properties"`
 
 	// Title A short, human-readable summary of the problem type. This value should not change between occurrences of the error.
-	Title *string `json:"title,omitempty"`
+	Title string `json:"title"`
 }
 
 // GetGreetingOutputBody defines model for GetGreetingOutputBody.

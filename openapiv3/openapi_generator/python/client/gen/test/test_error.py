@@ -41,6 +41,7 @@ class TestError(unittest.TestCase):
             )
         else:
             return Error(
+                title = 'Bad Request',
         )
         """
 

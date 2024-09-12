@@ -17,7 +17,7 @@ type Error struct {
 	// Properties: Optional map of properties
 	Properties map[string]interface{} `json:"properties,omitempty" mapstructure:"properties,omitempty"`
 	// Title: A short, human-readable summary of the problem type. This value should not change between occurrences of the error.
-	Title string `json:"title,omitempty" mapstructure:"title,omitempty"`
+	Title string `json:"title" mapstructure:"title"`
 }
 
 // Validate implements basic validation for this model

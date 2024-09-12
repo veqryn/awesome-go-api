@@ -33,6 +33,10 @@ import (
 //go:generate openapi-generator generate -i openapi_v3.0.3.gen.yaml -g go-server -o ./openapi_generator/go/server_gorilla/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/server_gorilla/gen --additional-properties=outputAsLibrary=true,sourceFolder=openapi
 //go:generate openapi-generator generate -i openapi_v3.0.3.gen.yaml -g python -o ./openapi_generator/python/client/gen
 
+// openapi-generator-go skipped because it only generates a server (and our server is huma in this example)
+
+// ogen skipped because it does not like Content-Type "application/problem+json", which Huma generates for errors.
+
 func main() {
 	humaAPI := api.Register(chi.NewMux())
 	b, err := humaAPI.OpenAPI().DowngradeYAML()

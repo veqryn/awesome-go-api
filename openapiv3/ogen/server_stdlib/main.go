@@ -30,7 +30,7 @@ func (s *App) PostReview(ctx context.Context, req *api.PostReviewInputBody) (api
 
 func (s *App) GetError(ctx context.Context) (*api.Error, error) {
 	respErr := &api.Error{
-		Title:   api.NewOptString("Bad Request"),
+		Title:   "Bad Request",
 		Details: api.NewOptString("This is an example error"),
 		// Unfortunately Ogen generates free-form objects as a map of string->[]byte, which is annoying
 		Properties: api.NewOptNilErrorProperties(api.ErrorProperties{

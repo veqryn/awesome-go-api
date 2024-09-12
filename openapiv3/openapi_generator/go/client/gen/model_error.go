@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the Error type satisfies the MappedNullable interface at compile time
@@ -20,19 +22,22 @@ var _ MappedNullable = &Error{}
 // Error An API error
 type Error struct {
 	// A short, human-readable summary of the problem type. This value should not change between occurrences of the error.
-	Title *string `json:"title,omitempty"`
+	Title string `json:"title"`
 	// A human-readable explanation specific to this occurrence of the problem.
 	Details *string `json:"details,omitempty"`
 	// Optional map of properties
 	Properties map[string]interface{} `json:"properties,omitempty"`
 }
 
+type _Error Error
+
 // NewError instantiates a new Error object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewError() *Error {
+func NewError(title string) *Error {
 	this := Error{}
+	this.Title = title
 	return &this
 }
 
@@ -44,36 +49,28 @@ func NewErrorWithDefaults() *Error {
 	return &this
 }
 
-// GetTitle returns the Title field value if set, zero value otherwise.
+// GetTitle returns the Title field value
 func (o *Error) GetTitle() string {
-	if o == nil || IsNil(o.Title) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Title
+
+	return o.Title
 }
 
-// GetTitleOk returns a tuple with the Title field value if set, nil otherwise
+// GetTitleOk returns a tuple with the Title field value
 // and a boolean to check if the value has been set.
 func (o *Error) GetTitleOk() (*string, bool) {
-	if o == nil || IsNil(o.Title) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Title, true
+	return &o.Title, true
 }
 
-// HasTitle returns a boolean if a field has been set.
-func (o *Error) HasTitle() bool {
-	if o != nil && !IsNil(o.Title) {
-		return true
-	}
-
-	return false
-}
-
-// SetTitle gets a reference to the given string and assigns it to the Title field.
+// SetTitle sets field value
 func (o *Error) SetTitle(v string) {
-	o.Title = &v
+	o.Title = v
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise.
@@ -151,9 +148,7 @@ func (o Error) MarshalJSON() ([]byte, error) {
 
 func (o Error) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Title) {
-		toSerialize["title"] = o.Title
-	}
+	toSerialize["title"] = o.Title
 	if !IsNil(o.Details) {
 		toSerialize["details"] = o.Details
 	}
@@ -161,6 +156,43 @@ func (o Error) ToMap() (map[string]interface{}, error) {
 		toSerialize["properties"] = o.Properties
 	}
 	return toSerialize, nil
+}
+
+func (o *Error) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"title",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varError := _Error{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varError)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Error(varError)
+
+	return err
 }
 
 type NullableError struct {

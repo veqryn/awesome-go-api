@@ -10,20 +10,6 @@ servers:
     description: dev instance
 
 paths:
-  /error:
-    get:
-      summary: Get an error
-      description: Responds with an error
-      operationId: get-error
-      # x-handler-group is required only by "openapi-generator-go"
-      x-handler-group: DefaultHandler
-      responses:
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
   /greeting/{name}:
     get:
       summary: Say hello to someone
@@ -74,12 +60,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /error:
+    get:
+      summary: Get an error
+      description: Responds with an error
+      operationId: get-error
+      # x-handler-group is required only by "openapi-generator-go"
+      x-handler-group: DefaultHandler
+      responses:
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
     Error:
       description: An API error
       type: object
+      required:
+        - title
       properties:
         title:
           description: A short, human-readable summary of the problem type. This value should not change between occurrences of the error.

@@ -17,7 +17,7 @@ package openapi
 type Error struct {
 
 	// A short, human-readable summary of the problem type. This value should not change between occurrences of the error.
-	Title string `json:"title,omitempty"`
+	Title string `json:"title"`
 
 	// A human-readable explanation specific to this occurrence of the problem.
 	Details string `json:"details,omitempty"`
@@ -28,6 +28,15 @@ type Error struct {
 
 // AssertErrorRequired checks if the required fields are not zero-ed
 func AssertErrorRequired(obj Error) error {
+	elements := map[string]interface{}{
+		"title": obj.Title,
+	}
+	for name, el := range elements {
+		if isZero := IsZeroValue(el); isZero {
+			return &RequiredError{Field: name}
+		}
+	}
+
 	return nil
 }
 

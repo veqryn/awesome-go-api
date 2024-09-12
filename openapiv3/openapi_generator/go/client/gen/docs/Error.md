@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Title** | Pointer to **string** | A short, human-readable summary of the problem type. This value should not change between occurrences of the error. | [optional] 
+**Title** | **string** | A short, human-readable summary of the problem type. This value should not change between occurrences of the error. | 
 **Details** | Pointer to **string** | A human-readable explanation specific to this occurrence of the problem. | [optional] 
 **Properties** | Pointer to **map[string]interface{}** | Optional map of properties | [optional] 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewError
 
-`func NewError() *Error`
+`func NewError(title string, ) *Error`
 
 NewError instantiates a new Error object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetTitle sets Title field to given value.
 
-### HasTitle
-
-`func (o *Error) HasTitle() bool`
-
-HasTitle returns a boolean if a field has been set.
 
 ### GetDetails
 

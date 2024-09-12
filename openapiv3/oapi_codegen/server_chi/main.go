@@ -51,7 +51,7 @@ func (s *App) GetError(w http.ResponseWriter, r *http.Request) {
 		Properties: &map[string]any{
 			"cause": 224.92,
 		},
-		Title: Ptr("Bad Request"),
+		Title: "Bad Request",
 	}
 	b, err := json.Marshal(respErr)
 	if err != nil {

@@ -11,7 +11,7 @@ import (
 type Error struct {
 	// A short, human-readable summary of the problem type. This value should not change between
 	// occurrences of the error.
-	Title OptString `json:"title"`
+	Title string `json:"title"`
 	// A human-readable explanation specific to this occurrence of the problem.
 	Details OptString `json:"details"`
 	// Optional map of properties.
@@ -19,7 +19,7 @@ type Error struct {
 }
 
 // GetTitle returns the value of Title.
-func (s *Error) GetTitle() OptString {
+func (s *Error) GetTitle() string {
 	return s.Title
 }
 
@@ -34,7 +34,7 @@ func (s *Error) GetProperties() OptNilErrorProperties {
 }
 
 // SetTitle sets the value of Title.
-func (s *Error) SetTitle(val OptString) {
+func (s *Error) SetTitle(val string) {
 	s.Title = val
 }
 

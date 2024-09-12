@@ -26,7 +26,7 @@ class Error(BaseModel):
     """
     An API error
     """ # noqa: E501
-    title: Optional[StrictStr] = Field(default=None, description="A short, human-readable summary of the problem type. This value should not change between occurrences of the error.")
+    title: StrictStr = Field(description="A short, human-readable summary of the problem type. This value should not change between occurrences of the error.")
     details: Optional[StrictStr] = Field(default=None, description="A human-readable explanation specific to this occurrence of the problem.")
     properties: Optional[Dict[str, Any]] = Field(default=None, description="Optional map of properties")
     __properties: ClassVar[List[str]] = ["title", "details", "properties"]

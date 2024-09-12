@@ -8,19 +8,6 @@ servers:
 - description: dev instance
   url: http://localhost:8080
 paths:
-  /error:
-    get:
-      description: Responds with an error
-      operationId: get-error
-      responses:
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Bad request
-      summary: Get an error
-      x-handler-group: DefaultHandler
   /greeting/{name}:
     get:
       description: Responds with a greeting
@@ -72,6 +59,19 @@ paths:
           description: Error
       summary: Send a review
       x-handler-group: DefaultHandler
+  /error:
+    get:
+      description: Responds with an error
+      operationId: get-error
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+      summary: Get an error
+      x-handler-group: DefaultHandler
 components:
   schemas:
     Error:
@@ -97,6 +97,8 @@ components:
           description: Optional map of properties
           nullable: true
           type: object
+      required:
+      - title
       type: object
     GetGreetingOutputBody:
       example:
