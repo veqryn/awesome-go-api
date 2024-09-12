@@ -1,0 +1,182 @@
+syntax = "proto3";
+// https://protobuf.dev/programming-guides/proto3/
+// https://grpc-ecosystem.github.io/grpc-gateway/
+// https://github.com/googleapis/googleapis/blob/master/google/api/http.proto
+
+package com.github.veqryn.awesome;
+option go_package = "github.com/veqryn/awesome-go-api/protobufv3/go/gen";
+
+import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// Documentation
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Awesome GO API";
+    version: "1.0.0";
+    description: "Actual example use cases for a curated list of golang api generator libraries"
+    license: {
+      name: "MIT License";
+      url: "https://github.com/veqryn/awesome-go-api/blob/main/LICENSE";
+    };
+  };
+  schemes: HTTP;
+  host: "localhost:8080"
+  consumes: "application/json";
+  produces: "application/json";
+};
+
+// The service definition.
+service Default {
+  rpc Greeting ( GreetingReq ) returns ( GreetingResp ) {
+    option (google.api.http) = {
+      get: "/greeting/{name}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Say hello to someone";
+      description: "Responds with a greeting";
+      responses: {
+        key: "200"
+        value: {
+          description: "OK"
+          // schema is filled in automatically for "200"
+        }
+      }
+      responses: {
+        key: "default";
+        value: {
+          description: "Error";
+          schema: {
+            json_schema: {
+              ref: "#/definitions/awesomeErrorResp"
+            }
+          }
+        }
+      }
+    };
+  }
+
+  rpc Review ( ReviewReq ) returns ( ReviewResp ) {
+    option (google.api.http) = {
+      post: "/reviews"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Send a review";
+      description: "Post a review to be saved";
+      responses: {
+        key: "201"
+        value: {
+          description: "Created"
+          schema: {
+            json_schema: {
+              ref: "#/definitions/awesomeReviewResp"
+            }
+          }
+        }
+      }
+      responses: {
+        key: "default";
+        value: {
+          description: "Error";
+          schema: {
+            json_schema: {
+              ref: "#/definitions/awesomeErrorResp"
+            }
+          }
+        }
+      }
+    };
+  }
+
+  rpc Error ( ErrorReq ) returns ( ErrorResp ) {
+    option (google.api.http) = {
+      get: "/error"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get an error";
+      description: "Responds with an error";
+      responses: {
+        key: "400";
+        value: {
+          description: "Bad request"
+          schema: {
+            json_schema: {
+              ref: "#/definitions/awesomeErrorResp"
+            }
+          }
+        }
+      }
+    };
+  }
+}
+
+message GreetingReq {
+  string name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Name to greet"
+    example: "\"world\""
+    max_length: 30
+  }];
+}
+
+message GreetingResp {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      required: [
+        "message"
+      ]
+    }
+  };
+
+  string message = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Greeting message",
+    example: "\"Hello, world!\""
+  }];
+}
+
+message ReviewReq {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      required: [
+        "author",
+        "rating"
+      ]
+    }
+  };
+
+  string author = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Author of the review",
+    max_length: 10
+  }];
+
+  optional string message = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Review message",
+    max_length: 100
+  }];
+
+  int64  rating = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Rating from 1 to 5",
+    minimum: 1
+    maximum: 5
+  }];
+}
+
+message ReviewResp {}
+
+message ErrorReq {}
+
+message ErrorResp {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      description: "An API error"
+      required: [
+        "title"
+      ]
+    }
+  };
+
+  string title = 1;
+  optional string details = 2;
+  map<string, google.protobuf.Any> properties = 3;
+}

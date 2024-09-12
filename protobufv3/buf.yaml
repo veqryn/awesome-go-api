@@ -1,0 +1,15 @@
+# https://buf.build/docs/tutorials/getting-started-with-buf-cli
+# buf dep update
+# buf generate
+version: v1
+name: buf.build/veqryn/awesome
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE
+# https://buf.build/explore
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
