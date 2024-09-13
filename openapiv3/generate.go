@@ -35,3 +35,10 @@ package openapiv3
 // go install -v github.com/ogen-go/ogen/cmd/ogen@v1.4.1
 //go:generate rm -rf ./ogen/gen
 //go:generate go run github.com/ogen-go/ogen/cmd/ogen --target ./ogen/gen --clean openapi_v3.0.3.yaml
+
+// Generate clients/servers with swagger-codegen
+// We are not generating server code with this because it is pretty bad and doesn't even give us an interface
+// https://github.com/swagger-api/swagger-codegen
+//go:generate rm -rf ./swagger_codegen/go/gen/ ./swagger_codegen/python/gen/
+//go:generate swagger-codegen-cli generate -i openapi_v3.0.3.yaml -l go -o ./swagger_codegen/go/gen/
+//go:generate swagger-codegen-cli generate -i openapi_v3.0.3.yaml -l python -o ./swagger_codegen/python/gen/

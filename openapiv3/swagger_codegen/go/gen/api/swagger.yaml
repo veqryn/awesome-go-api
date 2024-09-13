@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Awesome GO API
+  description: Actual example use cases for a curated list of golang api generator
+    libraries
+  version: 1.0.0
+servers:
+- url: http://localhost:8080
+  description: dev instance
+paths:
+  /greeting/{name}:
+    get:
+      summary: Say hello to someone
+      description: Responds with a greeting
+      operationId: greeting
+      parameters:
+      - name: name
+        in: path
+        description: Name to greet
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 30
+          type: string
+        example: world
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGreetingOutputBody'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-handler-group: DefaultHandler
+  /reviews:
+    post:
+      summary: Send a review
+      description: Post a review to be saved
+      operationId: post-review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostReviewInputBody'
+        required: true
+      responses:
+        "201":
+          description: Created
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-handler-group: DefaultHandler
+  /error:
+    get:
+      summary: Get an error
+      description: Responds with an error
+      operationId: get-error
+      responses:
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-handler-group: DefaultHandler
+components:
+  schemas:
+    Error:
+      required:
+      - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: "A short, human-readable summary of the problem type. This\
+            \ value should not change between occurrences of the error."
+          example: Bad Request
+        details:
+          type: string
+          description: A human-readable explanation specific to this occurrence of
+            the problem.
+          example: Property foo is required but is missing.
+        properties:
+          type: object
+          additionalProperties: true
+          description: Optional map of properties
+          nullable: true
+      description: An API error
+    GetGreetingOutputBody:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: Greeting message
+          example: "Hello, world!"
+      example:
+        message: "Hello, world!"
+    PostReviewInputBody:
+      required:
+      - author
+      - rating
+      type: object
+      properties:
+        author:
+          maxLength: 10
+          type: string
+          description: Author of the review
+        message:
+          maxLength: 100
+          type: string
+          description: Review message
+        rating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          description: Rating from 1 to 5
+          format: int64

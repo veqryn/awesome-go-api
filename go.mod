@@ -20,6 +20,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.30.0
 	go.opentelemetry.io/otel/trace v1.30.0
 	go.uber.org/multierr v1.11.0
+	golang.org/x/oauth2 v0.22.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20240903143218-8af14fe29dc1
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1
 	google.golang.org/grpc v1.66.2
