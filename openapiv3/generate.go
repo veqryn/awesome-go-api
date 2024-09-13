@@ -20,8 +20,8 @@ package openapiv3
 // https://openapi-generator.tech/docs/usage
 // brew install openapi-generator
 //go:generate rm -rf ./openapi_generator/go/client/gen ./openapi_generator/go/server_gorilla/gen ./openapi_generator/python/client/gen
-//go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go -o ./openapi_generator/go/client/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/client/gen --additional-properties=withGoMod=false,generateInterfaces=true
-//go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go-server -o ./openapi_generator/go/server_gorilla/gen --git-user-id veqryn --git-repo-id awesome-go-api/huma/openapi/openapi_generator/go/server_gorilla/gen --additional-properties=outputAsLibrary=true,sourceFolder=openapi
+//go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go -o ./openapi_generator/go/client/gen --git-user-id veqryn --git-repo-id awesome-go-api/openapiv3/openapi_generator/go/client/gen --additional-properties=withGoMod=false,generateInterfaces=true
+//go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g go-server -o ./openapi_generator/go/server_gorilla/gen --git-user-id veqryn --git-repo-id awesome-go-api/openapiv3/openapi_generator/go/server_gorilla/gen --additional-properties=outputAsLibrary=true,sourceFolder=openapi
 //go:generate openapi-generator generate -i openapi_v3.0.3.yaml -g python -o ./openapi_generator/python/client/gen
 
 // Generate server with contiamo/openapi-generator-go

@@ -116,7 +116,9 @@ components:
           type: string
           description: Review message
         rating:
-          type: string
+          maximum: 5
+          minimum: 1
+          type: integer
           description: Rating from 1 to 5
           format: int64
     awesomeReviewResp:

@@ -100,7 +100,7 @@ definitions:
         description: Review message
         maxLength: 100
       rating:
-        type: string
+        type: integer
         format: int64
         description: Rating from 1 to 5
         maximum: 5

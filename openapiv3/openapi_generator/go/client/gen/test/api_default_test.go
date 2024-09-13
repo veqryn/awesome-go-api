@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/client/gen"
+	openapiclient "github.com/veqryn/awesome-go-api/openapiv3/openapi_generator/go/client/gen"
 )
 
 func Test_openapi_DefaultAPIService(t *testing.T) {

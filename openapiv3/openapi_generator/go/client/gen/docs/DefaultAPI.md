@@ -27,7 +27,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/client/gen"
+	openapiclient "github.com/veqryn/awesome-go-api/openapiv3/openapi_generator/go/client/gen"
 )
 
 func main() {
@@ -86,7 +86,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/client/gen"
+	openapiclient "github.com/veqryn/awesome-go-api/openapiv3/openapi_generator/go/client/gen"
 )
 
 func main() {
@@ -156,7 +156,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/client/gen"
+	openapiclient "github.com/veqryn/awesome-go-api/openapiv3/openapi_generator/go/client/gen"
 )
 
 func main() {
