@@ -90,10 +90,14 @@ RUN set -eux; \
     wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.8.0/openapi-generator-cli-7.8.0.jar -O /openapi-generator-cli.jar; \
     printf '#!/usr/bin/env bash'"\n"'java -jar /openapi-generator-cli.jar "$@"'"\n" > /usr/local/bin/openapi-generator; \
     chmod +x /usr/local/bin/openapi-generator; \
+    wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.61/swagger-codegen-cli-3.0.61.jar -O /swagger-codegen-cli.jar; \
+    printf '#!/usr/bin/env bash'"\n"'java -jar /swagger-codegen-cli.jar "$@"'"\n" > /usr/local/bin/swagger-codegen-cli; \
+    chmod +x /usr/local/bin/swagger-codegen-cli; \
     go install github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@v2.2.0; \
     go install github.com/contiamo/openapi-generator-go/v2@v2.1.2; \
     go install -v github.com/ogen-go/ogen/cmd/ogen@v1.4.1; \
     openapi-generator version; \
+    swagger-codegen-cli version; \
     oapi-codegen --version; \
     openapi-generator-go version; \
     ogen --version

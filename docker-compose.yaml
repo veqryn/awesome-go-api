@@ -8,19 +8,3 @@ services:
     working_dir: "/go/src/github.com/veqryn/awesome-go-api"
     volumes:
       - "./:/go/src/github.com/veqryn/awesome-go-api"
-
-  openapiv2tov3:
-    image: swaggerapi/swagger-codegen-cli-v3:3.0.62
-    working_dir: "/opt/mnt"
-    command:
-      - "generate"
-      - "-i"
-      - "./protobufv3/openapiv2/gen/awesome.swagger.json"
-      - "-l"
-      #- "go"
-      #- "openapi"
-      - "openapi-yaml"
-      - "-o"
-      - "./protobufv3/openapiv3/gen/"
-    volumes:
-      - "./:/opt/mnt:Z"

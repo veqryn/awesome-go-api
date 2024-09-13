@@ -27,7 +27,7 @@ from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from protoc_gen_openapiv2.options import annotations_pb2 as protoc__gen__openapiv2_dot_options_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rawesome.proto\x12\x19\x63om.github.veqryn.awesome\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"@\n\x0bGreetingReq\x12\x31\n\x04name\x18\x01 \x01(\tB\x1d\x92\x41\x1a\x32\rName to greetJ\x07\"world\"x\x1eR\x04name\"a\n\x0cGreetingResp\x12@\n\x07message\x18\x01 \x01(\tB&\x92\x41#2\x10Greeting messageJ\x0f\"Hello, world!\"R\x07message:\x0f\x92\x41\x0c\n\n\xd2\x01\x07message\"\xde\x01\n\tReviewReq\x12\x33\n\x06\x61uthor\x18\x01 \x01(\tB\x1b\x92\x41\x18\x32\x14\x41uthor of the reviewx\nR\x06\x61uthor\x12\x34\n\x07message\x18\x02 \x01(\tB\x15\x92\x41\x12\x32\x0eReview messagexdH\x00R\x07message\x88\x01\x01\x12\x41\n\x06rating\x18\x03 \x01(\x03\x42)\x92\x41&2\x12Rating from 1 to 5Y\x00\x00\x00\x00\x00\x00\x14@i\x00\x00\x00\x00\x00\x00\xf0?R\x06rating:\x17\x92\x41\x14\n\x12\xd2\x01\x06\x61uthor\xd2\x01\x06ratingB\n\n\x08_message\"\x0c\n\nReviewResp\"\n\n\x08\x45rrorReq\"\x94\x02\n\tErrorResp\x12\x14\n\x05title\x18\x01 \x01(\tR\x05title\x12\x1d\n\x07\x64\x65tails\x18\x02 \x01(\tH\x00R\x07\x64\x65tails\x88\x01\x01\x12T\n\nproperties\x18\x03 \x03(\x0b\x32\x34.com.github.veqryn.awesome.ErrorResp.PropertiesEntryR\nproperties\x1aS\n\x0fPropertiesEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12*\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyR\x05value:\x02\x38\x01:\x1b\x92\x41\x18\n\x16\x32\x0c\x41n API error\xd2\x01\x05titleB\n\n\x08_details2\xcd\x05\n\x07\x44\x65\x66\x61ult\x12\xee\x01\n\x08Greeting\x12&.com.github.veqryn.awesome.GreetingReq\x1a\'.com.github.veqryn.awesome.GreetingResp\"\x90\x01\x92\x41u\x12\x14Say hello to someone\x1a\x18Responds with a greetingJ\x0b\n\x03\x32\x30\x30\x12\x04\n\x02OKJ6\n\x07\x64\x65\x66\x61ult\x12+\n\x05\x45rror\x12\"\n \x1a\x1e#/definitions/awesomeErrorResp\x82\xd3\xe4\x93\x02\x12\x12\x10/greeting/{name}\x12\x88\x02\n\x06Review\x12$.com.github.veqryn.awesome.ReviewReq\x1a%.com.github.veqryn.awesome.ReviewResp\"\xb0\x01\x92\x41\x99\x01\x12\rSend a review\x1a\x19Post a review to be savedJ5\n\x03\x32\x30\x31\x12.\n\x07\x43reated\x12#\n!\x1a\x1f#/definitions/awesomeReviewRespJ6\n\x07\x64\x65\x66\x61ult\x12+\n\x05\x45rror\x12\"\n \x1a\x1e#/definitions/awesomeErrorResp\x82\xd3\xe4\x93\x02\r\"\x08/reviews:\x01*\x12\xc5\x01\n\x05\x45rror\x12#.com.github.veqryn.awesome.ErrorReq\x1a$.com.github.veqryn.awesome.ErrorResp\"q\x92\x41`\x12\x0cGet an error\x1a\x16Responds with an errorJ8\n\x03\x34\x30\x30\x12\x31\n\x0b\x42\x61\x64 request\x12\"\n \x1a\x1e#/definitions/awesomeErrorResp\x82\xd3\xe4\x93\x02\x08\x12\x06/errorB\xa3\x02Z2github.com/veqryn/awesome-go-api/protobufv3/go/gen\x92\x41\xeb\x01\x12\xb1\x01\n\x0e\x41wesome GO API\x12MActual example use cases for a curated list of golang api generator libraries*I\n\x0bMIT License\x12:https://github.com/veqryn/awesome-go-api/blob/main/LICENSE2\x05\x31.0.0\x1a\x0elocalhost:8080*\x01\x01\x32\x10\x61pplication/json:\x10\x61pplication/jsonb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rawesome.proto\x12\x19\x63om.github.veqryn.awesome\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"@\n\x0bGreetingReq\x12\x31\n\x04name\x18\x01 \x01(\tB\x1d\x92\x41\x1a\x32\rName to greetJ\x07\"world\"x\x1eR\x04name\"a\n\x0cGreetingResp\x12@\n\x07message\x18\x01 \x01(\tB&\x92\x41#2\x10Greeting messageJ\x0f\"Hello, world!\"R\x07message:\x0f\x92\x41\x0c\n\n\xd2\x01\x07message\"\xde\x01\n\tReviewReq\x12\x33\n\x06\x61uthor\x18\x01 \x01(\tB\x1b\x92\x41\x18\x32\x14\x41uthor of the reviewx\nR\x06\x61uthor\x12\x34\n\x07message\x18\x02 \x01(\tB\x15\x92\x41\x12\x32\x0eReview messagexdH\x00R\x07message\x88\x01\x01\x12\x41\n\x06rating\x18\x03 \x01(\x03\x42)\x92\x41&2\x12Rating from 1 to 5Y\x00\x00\x00\x00\x00\x00\x14@i\x00\x00\x00\x00\x00\x00\xf0?R\x06rating:\x17\x92\x41\x14\n\x12\xd2\x01\x06\x61uthor\xd2\x01\x06ratingB\n\n\x08_message\"\x0c\n\nReviewResp\"\n\n\x08\x45rrorReq\"\x0b\n\tErrorResp2\xdc\x03\n\x07\x44\x65\x66\x61ult\x12\xa8\x01\n\x08Greeting\x12&.com.github.veqryn.awesome.GreetingReq\x1a\'.com.github.veqryn.awesome.GreetingResp\"K\x92\x41\x30\x12\x14Say hello to someone\x1a\x18Responds with a greeting\x82\xd3\xe4\x93\x02\x12\x12\x10/greeting/{name}\x12\x97\x01\n\x06Review\x12$.com.github.veqryn.awesome.ReviewReq\x1a%.com.github.veqryn.awesome.ReviewResp\"@\x92\x41*\x12\rSend a review\x1a\x19Post a review to be saved\x82\xd3\xe4\x93\x02\r\"\x08/reviews:\x01*\x12\x8b\x01\n\x05\x45rror\x12#.com.github.veqryn.awesome.ErrorReq\x1a$.com.github.veqryn.awesome.ErrorResp\"7\x92\x41&\x12\x0cGet an error\x1a\x16Responds with an error\x82\xd3\xe4\x93\x02\x08\x12\x06/errorB\xa3\x02Z2github.com/veqryn/awesome-go-api/protobufv3/go/gen\x92\x41\xeb\x01\x12\xb1\x01\n\x0e\x41wesome GO API\x12MActual example use cases for a curated list of golang api generator libraries*I\n\x0bMIT License\x12:https://github.com/veqryn/awesome-go-api/blob/main/LICENSE2\x05\x31.0.0\x1a\x0elocalhost:8080*\x01\x01\x32\x10\x61pplication/json:\x10\x61pplication/jsonb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -49,16 +49,12 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_REVIEWREQ'].fields_by_name['rating']._serialized_options = b'\222A&2\022Rating from 1 to 5Y\000\000\000\000\000\000\024@i\000\000\000\000\000\000\360?'
   _globals['_REVIEWREQ']._loaded_options = None
   _globals['_REVIEWREQ']._serialized_options = b'\222A\024\n\022\322\001\006author\322\001\006rating'
-  _globals['_ERRORRESP_PROPERTIESENTRY']._loaded_options = None
-  _globals['_ERRORRESP_PROPERTIESENTRY']._serialized_options = b'8\001'
-  _globals['_ERRORRESP']._loaded_options = None
-  _globals['_ERRORRESP']._serialized_options = b'\222A\030\n\0262\014An API error\322\001\005title'
   _globals['_DEFAULT'].methods_by_name['Greeting']._loaded_options = None
-  _globals['_DEFAULT'].methods_by_name['Greeting']._serialized_options = b'\222Au\022\024Say hello to someone\032\030Responds with a greetingJ\013\n\003200\022\004\n\002OKJ6\n\007default\022+\n\005Error\022\"\n \032\036#/definitions/awesomeErrorResp\202\323\344\223\002\022\022\020/greeting/{name}'
+  _globals['_DEFAULT'].methods_by_name['Greeting']._serialized_options = b'\222A0\022\024Say hello to someone\032\030Responds with a greeting\202\323\344\223\002\022\022\020/greeting/{name}'
   _globals['_DEFAULT'].methods_by_name['Review']._loaded_options = None
-  _globals['_DEFAULT'].methods_by_name['Review']._serialized_options = b'\222A\231\001\022\rSend a review\032\031Post a review to be savedJ5\n\003201\022.\n\007Created\022#\n!\032\037#/definitions/awesomeReviewRespJ6\n\007default\022+\n\005Error\022\"\n \032\036#/definitions/awesomeErrorResp\202\323\344\223\002\r\"\010/reviews:\001*'
+  _globals['_DEFAULT'].methods_by_name['Review']._serialized_options = b'\222A*\022\rSend a review\032\031Post a review to be saved\202\323\344\223\002\r\"\010/reviews:\001*'
   _globals['_DEFAULT'].methods_by_name['Error']._loaded_options = None
-  _globals['_DEFAULT'].methods_by_name['Error']._serialized_options = b'\222A`\022\014Get an error\032\026Responds with an errorJ8\n\003400\0221\n\013Bad request\022\"\n \032\036#/definitions/awesomeErrorResp\202\323\344\223\002\010\022\006/error'
+  _globals['_DEFAULT'].methods_by_name['Error']._serialized_options = b'\222A&\022\014Get an error\032\026Responds with an error\202\323\344\223\002\010\022\006/error'
   _globals['_GREETINGREQ']._serialized_start=149
   _globals['_GREETINGREQ']._serialized_end=213
   _globals['_GREETINGRESP']._serialized_start=215
@@ -69,10 +65,8 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_REVIEWRESP']._serialized_end=551
   _globals['_ERRORREQ']._serialized_start=553
   _globals['_ERRORREQ']._serialized_end=563
-  _globals['_ERRORRESP']._serialized_start=566
-  _globals['_ERRORRESP']._serialized_end=842
-  _globals['_ERRORRESP_PROPERTIESENTRY']._serialized_start=718
-  _globals['_ERRORRESP_PROPERTIESENTRY']._serialized_end=801
-  _globals['_DEFAULT']._serialized_start=845
-  _globals['_DEFAULT']._serialized_end=1562
+  _globals['_ERRORRESP']._serialized_start=565
+  _globals['_ERRORRESP']._serialized_end=576
+  _globals['_DEFAULT']._serialized_start=579
+  _globals['_DEFAULT']._serialized_end=1055
 # @@protoc_insertion_point(module_scope)

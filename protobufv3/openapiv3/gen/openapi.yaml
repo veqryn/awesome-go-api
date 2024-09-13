@@ -26,12 +26,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/awesomeErrorResp'
-        "400":
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/awesomeErrorResp'
         default:
           description: An unexpected error response.
           content:
@@ -56,17 +50,17 @@ paths:
           type: string
       responses:
         "200":
-          description: OK
+          description: A successful response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/awesomeGreetingResp'
         default:
-          description: Error
+          description: An unexpected error response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/awesomeErrorResp'
+                $ref: '#/components/schemas/rpcStatus'
   /reviews:
     post:
       tags:
@@ -87,35 +81,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/awesomeReviewResp'
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/awesomeReviewResp'
         default:
-          description: Error
+          description: An unexpected error response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/awesomeErrorResp'
+                $ref: '#/components/schemas/rpcStatus'
       x-codegen-request-body-name: body
 components:
   schemas:
     awesomeErrorResp:
-      required:
-      - title
       type: object
-      properties:
-        title:
-          type: string
-        details:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/protobufAny'
-      description: An API error
     awesomeGreetingResp:
       required:
       - message

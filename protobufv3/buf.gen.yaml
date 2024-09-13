@@ -18,5 +18,8 @@ plugins:
   - plugin: buf.build/grpc/python
     out: python/gen
   # OpenAPI v2
+  # https://github.com/grpc-ecosystem/grpc-gateway/blob/main/docs/docs/mapping/customizing_openapi_output.md
   - plugin: openapiv2
     out: openapiv2/gen
+    opt: output_format=yaml
+    #opt: disable_default_responses=true
