@@ -1,3 +1,9 @@
+/*
+openapi-generator-go only generates servers from an OpenAPI v3 spec.
+It provides an interface that you implement.
+The individual routes are all compatible with the http.Handler interface.
+Other than creating the interface and the models, this library and its generated code do nothing extra.
+*/
 package main
 
 import (

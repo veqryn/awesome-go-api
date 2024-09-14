@@ -65,8 +65,10 @@ paths:
       description: Responds with an error
       operationId: get-error
       responses:
-        "400":
-          description: Bad request
+        "200":
+          description: OK
+        default:
+          description: Error
           content:
             application/json:
               schema:

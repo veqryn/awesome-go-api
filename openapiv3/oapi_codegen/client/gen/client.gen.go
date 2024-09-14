@@ -341,7 +341,7 @@ type ClientWithResponsesInterface interface {
 type GetErrorResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON400      *Error
+	JSONDefault  *Error
 }
 
 // Status returns HTTPResponse.Status
@@ -454,12 +454,12 @@ func ParseGetErrorResponse(rsp *http.Response) (*GetErrorResponse, error) {
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest Error
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON400 = &dest
+		response.JSONDefault = &dest
 
 	}
 

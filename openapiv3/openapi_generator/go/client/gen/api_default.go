@@ -149,7 +149,6 @@ func (a *DefaultAPIService) GetErrorExecute(r ApiGetErrorRequest) (*http.Respons
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -158,7 +157,6 @@ func (a *DefaultAPIService) GetErrorExecute(r ApiGetErrorRequest) (*http.Respons
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-		}
 		return localVarHTTPResponse, newErr
 	}
 

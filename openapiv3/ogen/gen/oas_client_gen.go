@@ -28,19 +28,19 @@ type Invoker interface {
 	// Responds with an error.
 	//
 	// GET /error
-	GetError(ctx context.Context) (*Error, error)
+	GetError(ctx context.Context) error
 	// Greeting invokes greeting operation.
 	//
 	// Responds with a greeting.
 	//
 	// GET /greeting/{name}
-	Greeting(ctx context.Context, params GreetingParams) (GreetingRes, error)
+	Greeting(ctx context.Context, params GreetingParams) (*GetGreetingOutputBody, error)
 	// PostReview invokes post-review operation.
 	//
 	// Post a review to be saved.
 	//
 	// POST /reviews
-	PostReview(ctx context.Context, request *PostReviewInputBody) (PostReviewRes, error)
+	PostReview(ctx context.Context, request *PostReviewInputBody) error
 }
 
 // Client implements OAS client.
@@ -48,8 +48,12 @@ type Client struct {
 	serverURL *url.URL
 	baseClient
 }
+type errorHandler interface {
+	NewError(ctx context.Context, err error) *ErrorStatusCode
+}
 
 var _ Handler = struct {
+	errorHandler
 	*Client
 }{}
 
@@ -96,12 +100,12 @@ func (c *Client) requestURL(ctx context.Context) *url.URL {
 // Responds with an error.
 //
 // GET /error
-func (c *Client) GetError(ctx context.Context) (*Error, error) {
-	res, err := c.sendGetError(ctx)
-	return res, err
+func (c *Client) GetError(ctx context.Context) error {
+	_, err := c.sendGetError(ctx)
+	return err
 }
 
-func (c *Client) sendGetError(ctx context.Context) (res *Error, err error) {
+func (c *Client) sendGetError(ctx context.Context) (res *GetErrorOK, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("get-error"),
 		semconv.HTTPRequestMethodKey.String("GET"),
@@ -168,12 +172,12 @@ func (c *Client) sendGetError(ctx context.Context) (res *Error, err error) {
 // Responds with a greeting.
 //
 // GET /greeting/{name}
-func (c *Client) Greeting(ctx context.Context, params GreetingParams) (GreetingRes, error) {
+func (c *Client) Greeting(ctx context.Context, params GreetingParams) (*GetGreetingOutputBody, error) {
 	res, err := c.sendGreeting(ctx, params)
 	return res, err
 }
 
-func (c *Client) sendGreeting(ctx context.Context, params GreetingParams) (res GreetingRes, err error) {
+func (c *Client) sendGreeting(ctx context.Context, params GreetingParams) (res *GetGreetingOutputBody, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("greeting"),
 		semconv.HTTPRequestMethodKey.String("GET"),
@@ -258,12 +262,12 @@ func (c *Client) sendGreeting(ctx context.Context, params GreetingParams) (res G
 // Post a review to be saved.
 //
 // POST /reviews
-func (c *Client) PostReview(ctx context.Context, request *PostReviewInputBody) (PostReviewRes, error) {
-	res, err := c.sendPostReview(ctx, request)
-	return res, err
+func (c *Client) PostReview(ctx context.Context, request *PostReviewInputBody) error {
+	_, err := c.sendPostReview(ctx, request)
+	return err
 }
 
-func (c *Client) sendPostReview(ctx context.Context, request *PostReviewInputBody) (res PostReviewRes, err error) {
+func (c *Client) sendPostReview(ctx context.Context, request *PostReviewInputBody) (res *PostReviewCreated, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("post-review"),
 		semconv.HTTPRequestMethodKey.String("POST"),

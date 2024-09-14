@@ -1,3 +1,14 @@
+/*
+Huma is a relatively light web framework.
+You define your routes by registering them.
+And then you define the handlers for each route, as well as the input/output
+structs for each handler/route.
+Then you (optionally) generate an OpenAPIv3 spec based on the above.
+
+Besides being a framework and implementing the spec in Golang first,
+what sets it apart from server generation libraries is that the input/output
+objects get filled in by the Huma framework, including paths and parameters.
+*/
 package api
 
 import (

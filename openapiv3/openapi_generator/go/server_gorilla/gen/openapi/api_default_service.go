@@ -32,8 +32,11 @@ func (s *DefaultAPIService) GetError(ctx context.Context) (ImplResponse, error) 
 	// TODO - update GetError with the required logic for this service method.
 	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
-	// TODO: Uncomment the next line to return response Response(400, Error{}) or use other options such as http.Ok ...
-	// return Response(400, Error{}), nil
+	// TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
+	// return Response(200, nil),nil
+
+	// TODO: Uncomment the next line to return response Response(0, Error{}) or use other options such as http.Ok ...
+	// return Response(0, Error{}), nil
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetError method not implemented")
 }

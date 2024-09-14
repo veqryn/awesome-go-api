@@ -89,7 +89,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '400': "Error",
+            '200': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -152,7 +152,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '400': "Error",
+            '200': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -215,7 +215,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '400': "Error",
+            '200': None,
         }
         response_data = self.api_client.call_api(
             *_param,

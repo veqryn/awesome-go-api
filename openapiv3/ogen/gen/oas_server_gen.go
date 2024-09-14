@@ -13,19 +13,23 @@ type Handler interface {
 	// Responds with an error.
 	//
 	// GET /error
-	GetError(ctx context.Context) (*Error, error)
+	GetError(ctx context.Context) error
 	// Greeting implements greeting operation.
 	//
 	// Responds with a greeting.
 	//
 	// GET /greeting/{name}
-	Greeting(ctx context.Context, params GreetingParams) (GreetingRes, error)
+	Greeting(ctx context.Context, params GreetingParams) (*GetGreetingOutputBody, error)
 	// PostReview implements post-review operation.
 	//
 	// Post a review to be saved.
 	//
 	// POST /reviews
-	PostReview(ctx context.Context, req *PostReviewInputBody) (PostReviewRes, error)
+	PostReview(ctx context.Context, req *PostReviewInputBody) error
+	// NewError creates *ErrorStatusCode from error returned by handler.
+	//
+	// Used for common default response.
+	NewError(ctx context.Context, err error) *ErrorStatusCode
 }
 
 // Server implements http server based on OpenAPI v3 specification and

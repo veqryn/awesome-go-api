@@ -68,8 +68,10 @@ paths:
       # x-handler-group is required only by "openapi-generator-go"
       x-handler-group: DefaultHandler
       responses:
-        400:
-          description: Bad request
+        200:
+          description: OK
+        default:
+          description: Error
           content:
             application/json:
               schema:

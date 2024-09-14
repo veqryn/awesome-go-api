@@ -1,3 +1,13 @@
+/*
+grpc/protobuf generates both clients and servers from a proto spec.
+It provides an interface that you implement.
+The grpc server calls the methods on that interface automatically.
+The input and output match the protobuf definitions.
+An (optional) grpc-gateway can be generated, which proxies and translates REST/JSON calls into gRPC calls.
+An (optional) OpenAPI v2 spec can be generated, which can then be translated into a v3 spec by a variety of tools.
+Well-Known-Types are extremely important to know about, but don't receive enough documentation.
+Errors and return codes are handled by returning a RPC Status object.
+*/
 package main
 
 import (

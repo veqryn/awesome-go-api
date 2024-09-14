@@ -1,3 +1,14 @@
+/*
+oapi-codegen generates both clients and servers from an OpenAPI v3 spec.
+It provides an interface that you implement.
+The individual route handlers do not conform to the http.Handler interface in
+some cases, such as when there are path parameters, so this library should not
+be considered compatible with the standard library handler or mux.
+Path params are nicely added to the interface method signatures, and are easy to access.
+However, bodies are not automatically parsed/unmarshalled for you, so you must know which
+input/body model goes with which route and unmarshal manually.
+Similarly, the response, whether successful or an error, must be marshalled and sent manually.
+*/
 package main
 
 import (
@@ -40,7 +51,13 @@ func (s *App) PostReview(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 
-		fmt.Println(string(b))
+		var in server.PostReviewInputBody
+		err = json.Unmarshal(b, &in)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Printf("%+v\n", in)
 	}
 	w.WriteHeader(http.StatusCreated)
 }

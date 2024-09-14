@@ -3,8 +3,14 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/go-faster/jx"
 )
+
+func (s *ErrorStatusCode) Error() string {
+	return fmt.Sprintf("code %d: %+v", s.StatusCode, s.Response)
+}
 
 // An API error.
 // Ref: #/components/schemas/Error
@@ -86,8 +92,8 @@ func (s *ErrorStatusCode) SetResponse(val Error) {
 	s.Response = val
 }
 
-func (*ErrorStatusCode) greetingRes()   {}
-func (*ErrorStatusCode) postReviewRes() {}
+// GetErrorOK is response for GetError operation.
+type GetErrorOK struct{}
 
 // Ref: #/components/schemas/GetGreetingOutputBody
 type GetGreetingOutputBody struct {
@@ -104,8 +110,6 @@ func (s *GetGreetingOutputBody) GetMessage() string {
 func (s *GetGreetingOutputBody) SetMessage(val string) {
 	s.Message = val
 }
-
-func (*GetGreetingOutputBody) greetingRes() {}
 
 // NewOptNilErrorProperties returns new OptNilErrorProperties with value set to v.
 func NewOptNilErrorProperties(v ErrorProperties) OptNilErrorProperties {
@@ -218,8 +222,6 @@ func (o OptString) Or(d string) string {
 
 // PostReviewCreated is response for PostReview operation.
 type PostReviewCreated struct{}
-
-func (*PostReviewCreated) postReviewRes() {}
 
 // Ref: #/components/schemas/PostReviewInputBody
 type PostReviewInputBody struct {

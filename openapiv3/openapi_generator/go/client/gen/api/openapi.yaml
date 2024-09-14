@@ -64,12 +64,14 @@ paths:
       description: Responds with an error
       operationId: get-error
       responses:
-        "400":
+        "200":
+          description: OK
+        default:
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Bad request
+          description: Error
       summary: Get an error
       x-handler-group: DefaultHandler
 components:

@@ -18,8 +18,8 @@ var _ Handler = UnimplementedHandler{}
 // Responds with an error.
 //
 // GET /error
-func (UnimplementedHandler) GetError(ctx context.Context) (r *Error, _ error) {
-	return r, ht.ErrNotImplemented
+func (UnimplementedHandler) GetError(ctx context.Context) error {
+	return ht.ErrNotImplemented
 }
 
 // Greeting implements greeting operation.
@@ -27,7 +27,7 @@ func (UnimplementedHandler) GetError(ctx context.Context) (r *Error, _ error) {
 // Responds with a greeting.
 //
 // GET /greeting/{name}
-func (UnimplementedHandler) Greeting(ctx context.Context, params GreetingParams) (r GreetingRes, _ error) {
+func (UnimplementedHandler) Greeting(ctx context.Context, params GreetingParams) (r *GetGreetingOutputBody, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -36,6 +36,14 @@ func (UnimplementedHandler) Greeting(ctx context.Context, params GreetingParams)
 // Post a review to be saved.
 //
 // POST /reviews
-func (UnimplementedHandler) PostReview(ctx context.Context, req *PostReviewInputBody) (r PostReviewRes, _ error) {
-	return r, ht.ErrNotImplemented
+func (UnimplementedHandler) PostReview(ctx context.Context, req *PostReviewInputBody) error {
+	return ht.ErrNotImplemented
+}
+
+// NewError creates *ErrorStatusCode from error returned by handler.
+//
+// Used for common default response.
+func (UnimplementedHandler) NewError(ctx context.Context, err error) (r *ErrorStatusCode) {
+	r = new(ErrorStatusCode)
+	return r
 }

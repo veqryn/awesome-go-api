@@ -1,3 +1,11 @@
+/*
+openapi-generator generates both clients and servers from an OpenAPI v3 spec.
+It provides an interface that you implement.
+The individual route handlers do not conform to the http.Handler interface.
+Path params and input bodies are added as fields in structs, added to the route method signature.
+The response bodies must be created manually from the generated models, then wrapped with a status code.
+Errors are returned in this way as well.
+*/
 package main
 
 import (
@@ -8,6 +16,8 @@ import (
 
 	"github.com/veqryn/awesome-go-api/openapiv3/openapi_generator/go/server_gorilla/gen/openapi"
 )
+
+var _ openapi.DefaultAPIServicer = &Service{}
 
 type Service struct{}
 
