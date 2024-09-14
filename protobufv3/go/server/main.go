@@ -54,7 +54,8 @@ func (s *app) Error(ctx context.Context, req *pb.ErrorReq) (*pb.ErrorResp, error
 		&errdetails.LocalizedMessage{
 			Locale:  "en-US",
 			Message: "Fix your widget",
-		})
+		},
+	)
 	if err != nil {
 		panic(err)
 	}

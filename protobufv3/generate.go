@@ -34,5 +34,6 @@ package protobufv3
 // Generate clients/servers with ogen
 // https://github.com/ogen-go/ogen
 // go install -v github.com/ogen-go/ogen/cmd/ogen@v1.4.1
-//go:generate rm -rf ./openapiv3/ogen/gen
+// Keep the gen/__init__.py so that the generated files can be imported
+//go:generate rm -rf ./openapiv3/ogen/gen/awesome_pb2.py ./openapiv3/ogen/gen/awesome_pb2.pyi ./openapiv3/ogen/gen/awesome_pb2_grpc.py
 //go:generate go run github.com/ogen-go/ogen/cmd/ogen --target ./openapiv3/ogen/gen --clean ./openapiv3/gen/openapi.yaml
