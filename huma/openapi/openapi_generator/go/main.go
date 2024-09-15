@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/davecgh/go-spew/spew"
-	openapi "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/client/gen"
+	openapi "github.com/veqryn/awesome-go-api/huma/openapi/openapi_generator/go/gen"
 )
 
 func main() {

@@ -1,3 +1,13 @@
+/*
+oapi-codegen generates both clients and servers from an OpenAPI v3 spec.
+The client turns path params and bodies into arguments on the client method calls.
+The response is a wrapper tha contains the http.Response, status code, and the expected parsed object model from the spec.
+For routes that don't return anything, a wrapper is still returned from the call.
+When a route returns an error, the method call puts it in the response wrapper,
+not in the returned error.
+The response object contains each possible object model described by the spec,
+and you must pick which one based on the status code.
+*/
 package main
 
 import (
@@ -55,5 +65,5 @@ func main() {
 
 	fmt.Printf("Status: %s\n", errorResp.Status())
 	fmt.Printf("Code: %d\n", errorResp.StatusCode())
-	spew.Dump(errorResp.JSON400)
+	spew.Dump(errorResp.JSONDefault)
 }

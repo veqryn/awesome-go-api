@@ -1,3 +1,13 @@
+/*
+openapi-generator generates both clients and servers from an OpenAPI v3 spec.
+The request must be created first, before being executed.
+The client turns path params into arguments on the request.
+The client turns bodies into a call to instantiate, followed by setting it on the request.
+The response has the object model from the spec, the http.Response, and an error.
+For routes that don't return anything, the object model is omitted.
+When a route returns an error, the method call puts it in the returned error,
+and though the model is parsed it requires some checks to access.
+*/
 package main
 
 import (

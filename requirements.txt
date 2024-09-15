@@ -3,5 +3,5 @@ google-api==0.1.12
 googleapis-common-protos==1.65.0
 grpcio==1.66.1
 grpcio-status==1.66.1
-protobuf==5.28.0
+protobuf==5.28.1
 protoc-gen-openapiv2==0.0.1

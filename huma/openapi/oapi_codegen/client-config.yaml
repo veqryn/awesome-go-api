@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/deepmap/oapi-codegen/HEAD/configuration-schema.json
-package: server
-output: ./oapi_codegen/server_chi/gen/server.chi.gen.go
+package: client
+output: ./oapi_codegen/gen/client.gen.go
 generate:
-  chi-server: true
   models: true
+  client: true

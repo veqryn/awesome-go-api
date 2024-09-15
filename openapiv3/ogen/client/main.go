@@ -1,3 +1,10 @@
+/*
+ogen generates both clients and servers from an OpenAPI v3 spec.
+The client turns path params and bodies into arguments on the client method calls.
+The response is the expected parsed object model from the spec.
+For routes that don't return anything, no response object is returned.
+When a route returns an error, the method call puts that in the returned error.
+*/
 package main
 
 import (
@@ -28,18 +35,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
-	switch t := greeting.(type) {
-	case *api.GetGreetingOutputBody:
-		spew.Dump(t)
-	default:
-		panic("unknown type")
-	}
+	spew.Dump(greeting)
 
 	// Send a review. Body became an argument.
 	fmt.Println("--- Sending a Review:")
 	message := "foobar"
-	review, err := c.PostReview(ctx, &api.PostReviewInputBody{
+	err = c.PostReview(ctx, &api.PostReviewInputBody{
 		Author:  "Bob",
 		Message: api.NewOptString(message),
 		Rating:  4,
@@ -48,19 +49,8 @@ func main() {
 		panic(err)
 	}
 
-	switch t := review.(type) {
-	case *api.PostReviewCreated:
-		spew.Dump(t)
-	default:
-		panic("unknown type")
-	}
-
 	// Get an error.
 	fmt.Println("--- Getting an Error:")
-	errorResp, err := c.GetError(ctx)
-	if err != nil {
-		panic(err)
-	}
-
-	spew.Dump(errorResp)
+	err = c.GetError(ctx)
+	spew.Dump(err)
 }

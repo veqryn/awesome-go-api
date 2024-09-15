@@ -1,3 +1,12 @@
+/*
+grpc generates both clients and servers from a proto spec.
+Every call includes an argument struct with the fields required.
+Every call returns a struct and any error.
+Any errors or non-OK status codes are returned in the error.
+The returned error must be converted from a golang error to a protobuf status,
+after which you can access the status code, message, and a free-form slice of any's.
+The returned status codes are different http, and there is only 1 OK status code.
+*/
 package main
 
 import (
