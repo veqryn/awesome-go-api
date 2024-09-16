@@ -10,6 +10,10 @@ package protobufv3
 //go:generate buf dep update
 //go:generate buf generate
 
+// Fix a bug with additionalProperties before we convert to v3
+// https://github.com/swagger-api/swagger-codegen/issues/12468
+//go:generate sed -i.bak "s/additionalProperties: {}/additionalProperties: true/" ./openapiv2/gen/awesome.swagger.yaml
+
 // Use swagger-codegen to convert the generated openapi v2 spec into v3
 // https://github.com/swagger-api/swagger-codegen
 //go:generate rm -rf ./openapiv3/gen

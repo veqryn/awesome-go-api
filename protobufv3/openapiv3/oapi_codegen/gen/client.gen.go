@@ -154,8 +154,8 @@ type ProtobufAny struct {
 	//
 	// Schemes other than `http`, `https` (or the empty scheme) might be
 	// used with implementation specific semantics.
-	Type                 *string                           `json:"@type,omitempty"`
-	AdditionalProperties map[string]map[string]interface{} `json:"-"`
+	Type                 *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // RpcStatus defines model for rpcStatus.
@@ -170,7 +170,7 @@ type DefaultReviewJSONRequestBody = AwesomeReviewReq
 
 // Getter for additional properties for ProtobufAny. Returns the specified
 // element and whether it was found
-func (a ProtobufAny) Get(fieldName string) (value map[string]interface{}, found bool) {
+func (a ProtobufAny) Get(fieldName string) (value interface{}, found bool) {
 	if a.AdditionalProperties != nil {
 		value, found = a.AdditionalProperties[fieldName]
 	}
@@ -178,9 +178,9 @@ func (a ProtobufAny) Get(fieldName string) (value map[string]interface{}, found 
 }
 
 // Setter for additional properties for ProtobufAny
-func (a *ProtobufAny) Set(fieldName string, value map[string]interface{}) {
+func (a *ProtobufAny) Set(fieldName string, value interface{}) {
 	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]map[string]interface{})
+		a.AdditionalProperties = make(map[string]interface{})
 	}
 	a.AdditionalProperties[fieldName] = value
 }
@@ -202,9 +202,9 @@ func (a *ProtobufAny) UnmarshalJSON(b []byte) error {
 	}
 
 	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]map[string]interface{})
+		a.AdditionalProperties = make(map[string]interface{})
 		for fieldName, fieldBuf := range object {
-			var fieldVal map[string]interface{}
+			var fieldVal interface{}
 			err := json.Unmarshal(fieldBuf, &fieldVal)
 			if err != nil {
 				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)

@@ -4,6 +4,8 @@ package api
 
 import (
 	"fmt"
+
+	"github.com/go-faster/jx"
 )
 
 func (s *RpcStatusStatusCode) Error() string {
@@ -284,18 +286,16 @@ func (s *ProtobufAny) SetAdditionalProps(val ProtobufAnyAdditional) {
 	s.AdditionalProps = val
 }
 
-type ProtobufAnyAdditional map[string]ProtobufAnyAdditionalItem
+type ProtobufAnyAdditional map[string]jx.Raw
 
 func (s *ProtobufAnyAdditional) init() ProtobufAnyAdditional {
 	m := *s
 	if m == nil {
-		m = map[string]ProtobufAnyAdditionalItem{}
+		m = map[string]jx.Raw{}
 		*s = m
 	}
 	return m
 }
-
-type ProtobufAnyAdditionalItem struct{}
 
 // Ref: #/components/schemas/rpcStatus
 type RpcStatus struct {

@@ -414,7 +414,9 @@ func (s *ProtobufAny) encodeFields(e *jx.Encoder) {
 	for k, elem := range s.AdditionalProps {
 		e.FieldStart(k)
 
-		elem.Encode(e)
+		if len(elem) != 0 {
+			e.Raw(elem)
+		}
 	}
 }
 
@@ -427,7 +429,7 @@ func (s *ProtobufAny) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode ProtobufAny to nil")
 	}
-	s.AdditionalProps = map[string]ProtobufAnyAdditionalItem{}
+	s.AdditionalProps = map[string]jx.Raw{}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
@@ -442,9 +444,11 @@ func (s *ProtobufAny) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"@type\"")
 			}
 		default:
-			var elem ProtobufAnyAdditionalItem
+			var elem jx.Raw
 			if err := func() error {
-				if err := elem.Decode(d); err != nil {
+				v, err := d.RawAppend(nil)
+				elem = jx.Raw(v)
+				if err != nil {
 					return err
 				}
 				return nil
@@ -486,7 +490,9 @@ func (s ProtobufAnyAdditional) encodeFields(e *jx.Encoder) {
 	for k, elem := range s {
 		e.FieldStart(k)
 
-		elem.Encode(e)
+		if len(elem) != 0 {
+			e.Raw(elem)
+		}
 	}
 }
 
@@ -497,9 +503,11 @@ func (s *ProtobufAnyAdditional) Decode(d *jx.Decoder) error {
 	}
 	m := s.init()
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		var elem ProtobufAnyAdditionalItem
+		var elem jx.Raw
 		if err := func() error {
-			if err := elem.Decode(d); err != nil {
+			v, err := d.RawAppend(nil)
+			elem = jx.Raw(v)
+			if err != nil {
 				return err
 			}
 			return nil
@@ -524,50 +532,6 @@ func (s ProtobufAnyAdditional) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *ProtobufAnyAdditional) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode implements json.Marshaler.
-func (s *ProtobufAnyAdditionalItem) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *ProtobufAnyAdditionalItem) encodeFields(e *jx.Encoder) {
-}
-
-var jsonFieldsNameOfProtobufAnyAdditionalItem = [0]string{}
-
-// Decode decodes ProtobufAnyAdditionalItem from json.
-func (s *ProtobufAnyAdditionalItem) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode ProtobufAnyAdditionalItem to nil")
-	}
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		default:
-			return d.Skip()
-		}
-	}); err != nil {
-		return errors.Wrap(err, "decode ProtobufAnyAdditionalItem")
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *ProtobufAnyAdditionalItem) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *ProtobufAnyAdditionalItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

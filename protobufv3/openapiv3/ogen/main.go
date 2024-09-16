@@ -32,19 +32,18 @@ func main() {
 
 	// Send a review. Body became an argument.
 	fmt.Println("--- Sending a Review:")
-	message := "foobar"
 	err = c.DefaultReview(ctx, &api.AwesomeReviewReq{
 		Author:  "Bob",
-		Message: api.NewOptString(message),
+		Message: api.NewOptString("foobar"),
 		Rating:  4,
 	})
 	if err != nil {
 		panic(err)
 	}
-	// Interestingly, we only get an error back here, no review resp
+	// Interestingly, we only get an error back here, no review resp. Ogen must know the response object is empty.
 
 	// Get an error.
 	fmt.Println("--- Getting an Error:")
 	err = c.DefaultError(ctx)
-	spew.Dump(err) // Unfortunately this also has an unmarshalling error
+	spew.Dump(err)
 }

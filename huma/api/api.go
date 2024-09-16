@@ -47,14 +47,6 @@ func Register(router *chi.Mux) huma.API {
 	}, PostReview)
 
 	huma.Get(humaAPI, "/error", GetError)
-	huma.Register(humaAPI, huma.Operation{
-		Method:        http.MethodPost,
-		DefaultStatus: http.StatusCreated,
-		Path:          "/reviews",
-		Summary:       "Post a review",
-		Tags:          []string{"Reviews"},
-		OperationID:   "post-review",
-	}, PostReview)
 
 	return humaAPI
 }

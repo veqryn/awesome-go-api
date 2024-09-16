@@ -38,9 +38,7 @@ class TestRpcStatus(unittest.TestCase):
                 code = 56,
                 message = '',
                 details = [
-                    {
-                        'key' : None
-                        }
+                    { }
                     ]
             )
         else:

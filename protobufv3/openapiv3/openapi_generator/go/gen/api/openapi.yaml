@@ -126,8 +126,7 @@ components:
     awesomeReviewResp:
       type: object
     protobufAny:
-      additionalProperties:
-        type: object
+      additionalProperties: true
       description: |-
         `Any` contains an arbitrary serialized protocol buffer message along with a
         URL that describes the type of the serialized message.

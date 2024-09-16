@@ -49,7 +49,12 @@ func (s *App) PostReview(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 
-		fmt.Println(string(b))
+		var input api.PostReviewInputBody
+		err = json.Unmarshal(b, &input)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%#+v\n", input)
 	}
 	w.WriteHeader(http.StatusCreated)
 }

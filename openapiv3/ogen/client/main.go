@@ -39,10 +39,9 @@ func main() {
 
 	// Send a review. Body became an argument.
 	fmt.Println("--- Sending a Review:")
-	message := "foobar"
 	err = c.PostReview(ctx, &api.PostReviewInputBody{
 		Author:  "Bob",
-		Message: api.NewOptString(message),
+		Message: api.NewOptString("foobar"),
 		Rating:  4,
 	})
 	if err != nil {

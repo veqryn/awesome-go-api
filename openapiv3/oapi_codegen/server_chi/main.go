@@ -56,7 +56,6 @@ func (s *App) PostReview(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-
 		fmt.Printf("%+v\n", in)
 	}
 	w.WriteHeader(http.StatusCreated)

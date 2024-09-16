@@ -47,7 +47,13 @@ func main() {
 	// Get an error.
 	fmt.Println("--- Getting an Error:")
 	errorResp, err := c.DefaultErrorWithResponse(ctx)
-	// With a grpc server, errors come as regular errors
-	spew.Dump(errorResp)
-	spew.Dump(err) // Unfortunately this error is an unmarshal error, due to the library trying to unmarshal a protobuf.Any into a map[string]any
+	if err != nil {
+		// Bad responses with error messages don't end up here.
+		// This is for things like an error making the connection.
+		panic(err)
+	}
+	fmt.Printf("Status: %s\n", errorResp.Status())
+	fmt.Printf("Code: %d\n", errorResp.StatusCode())
+	spew.Dump(errorResp.JSON200)
+	spew.Dump(errorResp.JSONDefault)
 }
