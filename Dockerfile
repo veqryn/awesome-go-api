@@ -76,11 +76,13 @@ RUN set -eux; \
     go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.22.0; \
     go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.22.0; \
     go install github.com/bufbuild/buf/cmd/buf@v1.41.0; \
+    go install connectrpc.com/connect/cmd/protoc-gen-connect-go@v1.16.2; \
     protoc-gen-go --version; \
     protoc-gen-go-grpc --version; \
     protoc-gen-grpc-gateway --version; \
     protoc-gen-openapiv2 --version; \
-    buf --version
+    buf --version; \
+    protoc-gen-connect-go --version
 
 # Install OpenAPI tooling
 RUN set -eux; \

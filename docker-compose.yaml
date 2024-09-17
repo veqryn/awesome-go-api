@@ -8,3 +8,5 @@ services:
     working_dir: "/go/src/github.com/veqryn/awesome-go-api"
     volumes:
       - "./:/go/src/github.com/veqryn/awesome-go-api"
+      # For debugging bazel
+      #- "./build/:/root/.cache"
